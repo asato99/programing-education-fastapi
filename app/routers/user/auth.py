@@ -1,7 +1,7 @@
 
 from fastapi import APIRouter
 from pydantic import BaseModel 
-from services.application.auth.auth_service import AuthService
+from app.services.application.auth.auth_service import AuthService
 
 router = APIRouter(
     prefix="/user/auth",
@@ -17,4 +17,4 @@ class LoginInfo(BaseModel):
 @router.post('/login')
 def login(param: LoginInfo):
 	print(param.password)
-	return AuthService.login()
+	return AuthService.login(param)
