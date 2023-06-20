@@ -7,17 +7,11 @@ class Problem():
     def get_problem_info(self):
         print('get problem info')
 
-class FrontEndCodingProblem(Problem):
+class CodingProblem(Problem):
     CATEGORY = 'コーティング'
     def __init__(self, problem_cd, title, question):
         super().__init__(problem_cd, title, question)
-        self.lang = {'html':'', 'css':'', 'javascript':''}
-
-class BackEndCodingProblem(Problem):
-    CATEGORY = 'コーティング'
-    def __init__(self, problem_cd, title, question):
-        super().__init__(problem_cd, title, question)
-        self.lang = {'php':'', 'python':''}
+        self.lang
     
 class DescriptionProblem(Problem):
     CATEGORY = '記述式'
