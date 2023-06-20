@@ -10,3 +10,12 @@ class ProblemInfo(BaseModel):
 	inputCode: str
 	options: list
 	answer: str
+
+class Constants():
+	CODING_FORMAT = 1
+	DESCRIPTION_FORMAT = 2
+	SELECTA_FORMAT = 3
+	
+	# 区分
+	FRONTEND = 1
+	BACKEND = 2

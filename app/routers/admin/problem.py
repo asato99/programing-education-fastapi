@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.models.interfaces.problem import ProblemInfo
+from app.models.types.problem import ProblemInfo
 from app.factories.problem_factory import ProblemFactory
 
 router = APIRouter(
@@ -10,5 +10,5 @@ router = APIRouter(
 
 @router.post('/create')
 def create(param: ProblemInfo):
-	problem = ProblemFactory.create_problem(param)
+	problem = ProblemFactory.create(param)
 	return
