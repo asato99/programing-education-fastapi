@@ -1,18 +1,21 @@
-from app.models.problem import CodingProblem, DescriptionProblem, SelectProblem
+from fastapi import HTTPException, status
+from app.models.problem import Problem, CodingProblem, DescriptionProblem, SelectProblem
 from app.models.types.problem import ProblemInfo, Constants as ProblemConstants
 
 class ProblemFactory():
     @classmethod
     def create(cls, param: ProblemInfo):
-        problem = {}
         if param.format == ProblemConstants.CODING_FORMAT:
-            problem = CodingProblem(param.problemCd, param.title, param.question)
+            problem = CodingProblem(param.problemCd)
 
         elif param.format == ProblemConstants.DESCRIPTION_FORMAT:
-            problem = DescriptionProblem(param.problemCd, param.title, param.question)
+            problem = DescriptionProblem(param.problemCd)
 
         elif param.format == ProblemConstants.SELECT_FORMAT:
-            problem = SelectProblem(param.problemCd, param.title, param.question)
-        
-        print(problem)
+            problem = SelectProblem(param.problemCd)
+
+        else:
+            problem = Problem(param.problemCd)
+            # raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
         return problem

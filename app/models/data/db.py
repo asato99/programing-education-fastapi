@@ -5,6 +5,7 @@ from typing import Optional
 
 class Problem(SQLModel, table=True):
     problem_cd: str = Field(primary_key=True)
+    format: int
     title: str
     question: str
     created_at: datetime = Field(default=datetime.utcnow(), nullable=False)
@@ -19,6 +20,9 @@ url = f"postgresql://{user}@{host}/{dbname}"
 engine = create_engine(f"postgresql://{user}@{host}/{dbname}", echo=True)
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
+
+def get_engine():
+    return engine
 
 if __name__ == '__main__':
     create_db_and_tables()

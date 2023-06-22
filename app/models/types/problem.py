@@ -1,20 +1,22 @@
 from pydantic import BaseModel 
+from typing import Optional
 
 class ProblemInfo(BaseModel):
 	problemCd: str
 	format: int
-	kubun: int
-	title: str
-	question: str
-	codeList: list
-	inputCode: str
-	options: list
-	answer: str
+	kubun: Optional[int] = None
+	title: Optional[str] = ''
+	question: Optional[str] = ''
+	codeList: Optional[list] = []
+	inputCode: Optional[str] = ''
+	options: Optional[list] = []
+	answer: Optional[str] = ''
 
 class Constants():
+	NONE_FORMAT = 0
 	CODING_FORMAT = 1
 	DESCRIPTION_FORMAT = 2
-	SELECTA_FORMAT = 3
+	SELECT_FORMAT = 3
 	
 	# 区分
 	FRONTEND = 1
