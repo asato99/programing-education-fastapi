@@ -1,6 +1,4 @@
 from app.models.types.problem import ProblemInfo, Constants
-from app.repositories.problem_repository import ProblemRepository
-from app.repositories.null_repository import NullRepository
 
 class Problem():
     def __init__(self, problem_cd):
@@ -8,7 +6,6 @@ class Problem():
             problemCd=problem_cd,
             format=self.get_problem_format(),
         )
-        self.repository = NullRepository()
 
     def set_title(self, title):
         self.problem_info.title = title
@@ -28,17 +25,14 @@ class Problem():
     def get_problem_format(self):
         return Constants.NONE_FORMAT
 
-    def set_repository(self, repository):
-        self.repository = repository
+    def regist(self, repository):
+        repository.regist(self.problem_info)
 
-    def regist(self):
-        self.repository.regist(self.problem_info)
+    def save(self, repository):
+        repository.save(self.problem_info)
 
-    def save(self):
-        ProblemRepository.save(self.problem_info)
-
-    def destroy(self):
-        ProblemRepository.destroy(self.problem_info)
+    def destroy(self, repository):
+        repository.destroy(self.problem_info)
 
 class CodingProblem(Problem):
     def __init__(self, problem_cd):

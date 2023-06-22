@@ -20,18 +20,23 @@ class TestProblemRepository(unittest.TestCase):
         ProblemRepository.save(problem_info) 
         ProblemRepository.destroy(problem_info)
 
+    # @unittest.skip("temporary test")
     def test_get_by_problem_cd(self):
         # arrange
         problem_info = ProblemData.front_end_coding
 
         # action
         ProblemRepository.regist(problem_info)
-        problem = ProblemRepository.get_by_problem_cd(problem_info.problemCd)
+        problem = ProblemRepository.get_problem_by_problem_cd(problem_info.problemCd)
 
         # assert
         expected = problem_info.title
         actual = problem.get_title()
         self.assertEqual(expected, actual)
+
+        # after
+        ProblemRepository.destroy(problem_info)
+
 
 
 if __name__ == "__main__":

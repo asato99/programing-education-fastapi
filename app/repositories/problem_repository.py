@@ -1,6 +1,7 @@
 from app.models.data import sqlalchemy_db
 from app.models.data.sqlalchemy_db import Problem as ProblemDao
 from app.models.types.problem import ProblemInfo
+from app.factories.problem_factory import ProblemFactory
 
 class ProblemRepository():
     @classmethod
@@ -39,8 +40,17 @@ class ProblemRepository():
         session.commit()
 
     @classmethod
-    def get_by_problem_cd(cls, problem_cd):
-        pass
+    def get_problem_by_problem_cd(cls, problem_cd):
+        session = sqlalchemy_db.get_session()
+        problemDao = session.query(ProblemDao).filter(ProblemDao.problem_cd==problem_cd).first()
+
+        problem_info = ProblemInfo(problemCd=problemDao.problem_cd, format=problemDao.format)
+        problem = ProblemFactory.create(problem_info)
+        problem.set_title(problemDao.title)
+        problem.set_question(problemDao.question)
+
+        return problem
+
 
         
         

@@ -59,11 +59,10 @@ class TestProblem(unittest.TestCase):
         problem.set_title('set title test')
         problem.set_question('set question test')
 
-        repository = ProblemRepository()
-        problem.set_repository(repository)
-
         # action
-        problem.regist()
+        repository = ProblemRepository()
+        problem.regist(repository)
+
 
     @unittest.skip("temporary test")
     def test_save(self):
@@ -73,7 +72,8 @@ class TestProblem(unittest.TestCase):
         problem.set_question('update question test')
 
         # action
-        problem.save()
+        repository = ProblemRepository()
+        problem.save(repository)
 
     @unittest.skip("temporary test")
     def test_destroy(self):
@@ -81,7 +81,8 @@ class TestProblem(unittest.TestCase):
         problem = Problem(problem_cd='test')
 
         # action
-        problem.destroy()
+        repository = ProblemRepository()
+        problem.destroy(repository)
 
 if __name__ == "__main__":
     unittest.main()
