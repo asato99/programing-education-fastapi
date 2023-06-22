@@ -3,6 +3,7 @@ import unittest
 import sys
 sys.path.append("..")
 from app.factories.problem_factory import ProblemFactory
+from app.repositories.problem_repository import ProblemRepository
 from app.models.problem import Problem
 from app.models.types.problem import Constants
 from resources.data.problem import ProblemData
@@ -57,6 +58,9 @@ class TestProblem(unittest.TestCase):
         problem = Problem(problem_cd='test')
         problem.set_title('set title test')
         problem.set_question('set question test')
+
+        repository = ProblemRepository()
+        problem.set_repository(repository)
 
         # action
         problem.regist()
