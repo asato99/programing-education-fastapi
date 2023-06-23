@@ -4,8 +4,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 import sys
 sys.path.append("..")
-from app.models.data.sqlalchemy_db import Base
-from app.models.data.tables import Problem
+from app.db.setting import Base
+from app.db.tables import Problem
 
 from alembic import context
 

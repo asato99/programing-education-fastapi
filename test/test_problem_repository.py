@@ -8,7 +8,7 @@ from resources.data.problem import ProblemData
 
 class TestProblemRepository(unittest.TestCase):
     def setUp(self):
-        # self.skipTest("depends on db")
+        self.skipTest("depends on db")
         pass
 
     def test_crud_front_end_problem(self):
@@ -36,6 +36,23 @@ class TestProblemRepository(unittest.TestCase):
 
         # after
         ProblemRepository.destroy(problem_info)
+
+    def test_get_all_problems(self):
+        # arrange
+        problem_info1 = ProblemData.front_end_coding
+        problem_info2 = ProblemData.description
+        problem_info3 = ProblemData.select
+
+        # action
+        ProblemRepository.regist(problem_info1)
+        ProblemRepository.regist(problem_info2)
+        ProblemRepository.regist(problem_info3)
+        problems = ProblemRepository.get_all_problems()
+
+        # after
+        ProblemRepository.destroy(problem_info1)
+        ProblemRepository.destroy(problem_info2)
+        ProblemRepository.destroy(problem_info3)
 
 
 

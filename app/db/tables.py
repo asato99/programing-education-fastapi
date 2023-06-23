@@ -1,4 +1,4 @@
-from app.models.data.sqlalchemy_db import Base
+from app.db.setting import Base
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Text, DateTime
 
