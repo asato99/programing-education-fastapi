@@ -1,4 +1,3 @@
-from fastapi import HTTPException, status
 from app.models.problem import Problem, CodingProblem, DescriptionProblem, SelectProblem
 from app.models.types.problem import ProblemInfo, Constants as ProblemConstants
 
