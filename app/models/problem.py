@@ -2,6 +2,11 @@ from app.types.problem import ProblemInfo, UserInput, Constants
 from app.services.domain.exe_service import ExeService
 
 class Problem():
+	NONE_FORMAT = 0
+	CODING_FORMAT = 1
+	DESCRIPTION_FORMAT = 2
+	SELECT_FORMAT = 3
+
     def __init__(self, problem_cd):
         self.problem_cd = problem_cd
         self.title = ''

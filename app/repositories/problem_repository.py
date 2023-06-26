@@ -6,38 +6,41 @@ from app.factories.problem_factory import ProblemFactory
 
 class ProblemRepository():
     @classmethod
-    def regist(cls, problem_info: ProblemInfo):
+    def regist(cls, problem):
         print('regist')
 
-        problem = ProblemDao(
-            problem_cd=problem_info.problemCd,
-            title=problem_info.title,
-            question=problem_info.question,
-            format=problem_info.format,
+        problemDao = ProblemDao(
+            problem_cd=problem.get_problem_cd(),
+            title=problem.get_title(),
+            question=problem.get_question(),
+            format=problem.get_problem_format(),
         )
 
+        if problem.get_problem_format() == problem.CODING_FORMAT:
+            pass
+
         session = setting.get_session()
-        session.add(problem)
+        session.add(problemDao)
         session.commit()
 
     @classmethod
-    def save(cls, problem_info: ProblemInfo):
+    def save(cls, problem):
         print('save')
 
         session = setting.get_session()
-        problem = session.query(ProblemDao).filter(ProblemDao.problem_cd==problem_info.problemCd).first()
-        problem.title = problem_info.title
-        problem.question = problem_info.question
+        problemDao = session.query(ProblemDao).filter(ProblemDao.problem_cd==problem.get_problem_cd()).first()
+        problemDao.title = problem.get_title()
+        problemDao.question = problem.get_question()
 
         session.commit()
 
 
     @classmethod
-    def delete(cls, problem_info: ProblemInfo):
+    def delete(cls, problem):
         print('delete')
         
         session = setting.get_session()
-        session.query(ProblemDao).filter(ProblemDao.problem_cd==problem_info.problemCd).delete()
+        session.query(ProblemDao).filter(ProblemDao.problem_cd==problem.get_problem_cd()).delete()
         session.commit()
 
     @classmethod
