@@ -1,4 +1,5 @@
-from app.models.types.problem import ProblemInfo, Constants
+from app.types.problem import ProblemInfo, UserInput, Constants
+from app.services.domain.exe_service import ExeService
 
 class Problem():
     def __init__(self, problem_cd):
@@ -42,30 +43,6 @@ class Problem():
         return self.updated_at
 
     #
-    #   repository
-    #
-    def regist(self, repository):
-        repository.regist(ProblemInfo(
-            problemCd=self.get_problem_cd(),
-            format=self.get_format(),
-            title=self.get_title(),
-            question=self.get_question(),
-        ))
-
-    def save(self, repository):
-        repository.save(ProblemInfo(
-            problemCd=self.get_problem_cd(),
-            format=self.get_format(),
-            title=self.get_title(),
-            question=self.get_question(),
-        ))
-
-    def destroy(self, repository):
-        repository.destroy(ProblemInfo(
-            problemCd=self.get_problem_cd(),
-        ))
-
-    #
     #   methods
     #
     def get_header(self):
@@ -79,12 +56,67 @@ class Problem():
 
 
 class CodingProblem(Problem):
+    FRONTEND = 1
+    BACKEND = 2
+
     def __init__(self, problem_cd):
         super().__init__(problem_cd)
-        self.lang = {}
+        self.coding= NullCoding()
 
     def get_problem_format(self):
         return Constants.CODING_FORMAT
+
+    def set_coding_type(self, coding):
+        self.coding= coding
+
+    def execute(self, user_input: UserInput):
+        return self.coding.execute(user_input)
+        
+        
+class FrontEndCoding():
+    HTML = 'html'
+    JAVASCRIPT = 'javascript'
+    CSS = 'css'
+
+    def __init__(self):
+        self.html = ''
+        self.javascript = ''
+        self.css = ''
+
+    def set_html(self, code):
+        self.html = code
+
+    def set_javascript(self, code):
+        self.javascript = code
+
+    def set_css(self, code):
+        self.css = code
+
+class BackEndCoding():
+    PHP = 'php'
+    PYTHON = 'python'
+
+    def __init__(self):
+        self.php_code = ''
+        self.python_code = ''
+
+    def set_php_code(self, code):
+        self.php_code = code
+
+    def set_python_code(self, code):
+        self.python_code = code
+
+    def execute(self, user_input):
+        if user_input.lang == self.PHP:
+            result = ExeService.execute_php_code(user_input.code)
+        else:
+            result = ExeService.execute_python_code(user_input.code)
+
+        return result
+
+class NullCoding():
+    def execute(self, user_input):
+        return None
     
 class DescriptionProblem(Problem):
     def __init__(self, problem_cd):
@@ -117,3 +149,4 @@ class Problems():
             }
             headers.append(header)
         return headers
+

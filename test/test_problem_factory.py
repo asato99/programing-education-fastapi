@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append("..")
 from app.factories.problem_factory import ProblemFactory
-from app.models.types.problem import Constants
+from app.types.problem import Constants
 from resources.data.problem import ProblemData
 
 class TestProblemFactory(unittest.TestCase):

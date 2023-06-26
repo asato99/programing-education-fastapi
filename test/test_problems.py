@@ -3,7 +3,7 @@ import sys
 sys.path.append("..")
 from app.factories.problem_factory import ProblemFactory
 from app.models.problem import Problems
-from app.models.types.problem import ProblemInfo, Constants
+from app.types.problem import ProblemInfo, Constants
 from resources.data.problem import ProblemData
 
 class TestProblemRepository(unittest.TestCase):

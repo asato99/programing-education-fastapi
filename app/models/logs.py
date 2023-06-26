@@ -3,5 +3,8 @@ class Logs():
 		self.user_id = user_id
 		self.problem_cd = problem_cd
 
-	def add_log(self, log_info, repository):
-		repository.add_log(self.user_id, self.problem_cd, log_info)
+		self.adding = []
+		self.removing = []
+
+	def add_log(self, log_info):
+		self.adding.append(log_info)

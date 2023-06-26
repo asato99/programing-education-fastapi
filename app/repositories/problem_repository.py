@@ -1,6 +1,6 @@
 from app.db import setting
 from app.db.tables import Problem as ProblemDao
-from app.models.types.problem import ProblemInfo
+from app.types.problem import ProblemInfo
 from app.models.problem import Problems
 from app.factories.problem_factory import ProblemFactory
 
@@ -33,7 +33,7 @@ class ProblemRepository():
 
 
     @classmethod
-    def destroy(cls, problem_info: ProblemInfo):
+    def delete(cls, problem_info: ProblemInfo):
         print('delete')
         
         session = setting.get_session()
@@ -41,7 +41,7 @@ class ProblemRepository():
         session.commit()
 
     @classmethod
-    def get_problem_by_problem_cd(cls, problem_cd):
+    def find_by_problem_cd(cls, problem_cd):
         session = setting.get_session()
         problemDao = session.query(ProblemDao).filter(ProblemDao.problem_cd==problem_cd).first()
 
@@ -53,7 +53,7 @@ class ProblemRepository():
         return problem
 
     @classmethod
-    def get_all_problems(cls):
+    def findAll(cls):
         session = setting.get_session()
         problemDaos = session.query(ProblemDao).all()
 

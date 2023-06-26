@@ -4,7 +4,7 @@ import sys
 sys.path.append("..")
 from app.factories.user_problem_factory import UserProblemFactory
 from app.models.problem import Problem
-from app.models.types.problem import Constants
+from app.types.problem import Constants
 from resources.data.problem import ProblemData
 
 class TestUserProblemFactory(unittest.TestCase):
@@ -21,8 +21,8 @@ class TestUserProblemFactory(unittest.TestCase):
 		user_problem = UserProblemFactory.create(self.user_id, problem)
 
 		# assert
-		expected = description.title
-		actual = user_problem.get_title()
+		expected = description.problemCd
+		actual = user_problem.get_problem_cd()
 		self.assertEqual(expected, actual)
 
 

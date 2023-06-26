@@ -16,6 +16,25 @@ class Problem(Base):
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
 
+class Coding(Base):
+    __tablename__ = "coding"
+    problem_cd = Column(String(30), primary_key=True)
+    langage = Column(String(10), primary_key=True)
+    code = Column(Text())
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+    )
+
+class CodingKubun(Base):
+    __tablename__ = "coding_kubun"
+    problem_cd = Column(String(30), primary_key=True)
+    kubun = Column(Integer)
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+    )
+
 class UserProblem(Base):
     __tablename__ = "user_problem"
     user_id = Column(Integer, primary_key=True)

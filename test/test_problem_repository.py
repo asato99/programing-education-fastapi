@@ -3,7 +3,7 @@ import unittest
 import sys
 sys.path.append("..")
 from app.repositories.problem_repository import ProblemRepository
-from app.models.types.problem import ProblemInfo, Constants
+from app.types.problem import ProblemInfo, Constants
 from resources.data.problem import ProblemData
 
 class TestProblemRepository(unittest.TestCase):
@@ -18,7 +18,7 @@ class TestProblemRepository(unittest.TestCase):
         # action
         ProblemRepository.regist(problem_info)
         ProblemRepository.save(problem_info) 
-        ProblemRepository.destroy(problem_info)
+        ProblemRepository.delete(problem_info)
 
     # @unittest.skip("temporary test")
     def test_get_by_problem_cd(self):
@@ -27,7 +27,7 @@ class TestProblemRepository(unittest.TestCase):
 
         # action
         ProblemRepository.regist(problem_info)
-        problem = ProblemRepository.get_problem_by_problem_cd(problem_info.problemCd)
+        problem = ProblemRepository.find_by_problem_cd(problem_info.problemCd)
 
         # assert
         expected = problem_info.title
@@ -35,7 +35,7 @@ class TestProblemRepository(unittest.TestCase):
         self.assertEqual(expected, actual)
 
         # after
-        ProblemRepository.destroy(problem_info)
+        ProblemRepository.delete(problem_info)
 
     def test_get_all_problems(self):
         # arrange
@@ -47,12 +47,12 @@ class TestProblemRepository(unittest.TestCase):
         ProblemRepository.regist(problem_info1)
         ProblemRepository.regist(problem_info2)
         ProblemRepository.regist(problem_info3)
-        problems = ProblemRepository.get_all_problems()
+        problems = ProblemRepository.findAll()
 
         # after
-        ProblemRepository.destroy(problem_info1)
-        ProblemRepository.destroy(problem_info2)
-        ProblemRepository.destroy(problem_info3)
+        ProblemRepository.delete(problem_info1)
+        ProblemRepository.delete(problem_info2)
+        ProblemRepository.delete(problem_info3)
 
 
 

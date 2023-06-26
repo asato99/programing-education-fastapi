@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.models.types.problem import ProblemInfo
+from app.types.problem import ProblemInfo
 from app.factories.problem_factory import ProblemFactory
 
 router = APIRouter(

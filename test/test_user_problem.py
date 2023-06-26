@@ -2,9 +2,10 @@ import unittest
 import sys
 sys.path.append("..")
 from app.models.problem import Problem
+from app.models.messages import Messages
 from app.models.user_problem import UserProblem
 from app.models.submission import Submission
-from app.models.types.problem import Constants
+from app.types.problem import Constants
 from resources.data.problem import ProblemData
 
 class TestProblem(unittest.TestCase):
@@ -16,18 +17,20 @@ class TestProblem(unittest.TestCase):
 		# arrange
 		description = ProblemData.description
 		problem = Problem(description.problemCd)
+		messages = Messages(self.user_id, description.problemCd)
 
 		# action
 		user_problem = UserProblem(
 			self.user_id,
-			problem)
+			problem,
+			messages)
 		user_problem.set_submission(Submission(
 			self.user_id,
 			description.problemCd))
 
 		# assert
-		expected = description.format
-		actual = user_problem.get_problem_format()
+		expected = description.problemCd
+		actual = user_problem.get_problem_cd()
 		self.assertEqual(expected, actual)
 
 if __name__ == "__main__":

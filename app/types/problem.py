@@ -12,6 +12,10 @@ class ProblemInfo(BaseModel):
 	options: Optional[list] = []
 	answer: Optional[str] = ''
 
+class UserInput(BaseModel):
+	lang: str
+	code: str
+
 class Constants():
 	NONE_FORMAT = 0
 	CODING_FORMAT = 1

@@ -1,8 +1,8 @@
 class UserProblem():
-	def __init__(self, user_id, problem):
+	def __init__(self, user_id, problem, messages):
 		self.user_id = user_id
 		self.problem = problem
-		self.messages = {}
+		self.messages = messages
 		self.submission = {}
 
 	def get_problem_cd(self):
@@ -22,11 +22,11 @@ class UserProblem():
 
 
 class CodingUserProblem(UserProblem):
-	def __init__(self, user_id, problem, logs):
-		super().__init__(user_id, problem)
+	def __init__(self, user_id, problem, messages, logs):
+		super().__init__(user_id, problem, messages)
 		self.logs = logs
 
-	def execute(self, user_input, repository):
-		# result = self.problem.execute(user_input)
-		result = {}
-		self.logs.add_log(result, repository)
+	def execute(self, user_input):
+		result = self.problem.execute(user_input)
+		self.logs.add_log(result)
+		return result
