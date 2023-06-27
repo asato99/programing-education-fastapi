@@ -151,6 +151,12 @@ class ProblemRepository():
 
                 problem.set_coding_type(back_end_coding)
 
+        elif problem.get_problem_format() == Problem.DESCRIPTION_FORMAT:
+            description_dto = session.query(DescriptionProblemDto).filter(DescriptionProblemDto.problem_cd==problem.get_problem_cd()).first()
+            problem.set_model_answer(description_dto.model_answer)
+
+
+
         return problem
 
     @classmethod
