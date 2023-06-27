@@ -5,7 +5,7 @@ from sqlalchemy.types import Integer, String, Text, DateTime
 from datetime import datetime
 from typing import Optional
 
-class Problem(Base):
+class ProblemDto(Base):
     __tablename__ = "problem"
     problem_cd = Column(String(30), primary_key=True)
     format = Column(Integer)
@@ -16,8 +16,8 @@ class Problem(Base):
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
 
-class Coding(Base):
-    __tablename__ = "coding"
+class CodingProblemDto(Base):
+    __tablename__ = "coding_problem"
     problem_cd = Column(String(30), primary_key=True)
     langage = Column(String(10), primary_key=True)
     code = Column(Text())
@@ -26,7 +26,7 @@ class Coding(Base):
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
 
-class CodingKubun(Base):
+class CodingKubunDto(Base):
     __tablename__ = "coding_kubun"
     problem_cd = Column(String(30), primary_key=True)
     kubun = Column(Integer)
@@ -35,7 +35,23 @@ class CodingKubun(Base):
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
 
-class UserProblem(Base):
+class DescriptionProblemDto(Base):
+    __tablename__ = "description_problem"
+    problem_cd = Column(String(30), primary_key=True)
+    model_answer = Column(Text())
+
+class SelectProblemOptionDto(Base):
+    __tablename__ = "select_problem_option"
+    problem_cd = Column(String(30), primary_key=True)
+    option_no = Column(Integer, primary_key=True)
+    option_text = Column(Text())
+
+class SelectProblemAnswerDto(Base):
+    __tablename__ = "select_problem_answer"
+    problem_cd = Column(String(30), primary_key=True)
+    answer = Column(Integer)
+
+class UserProblemDto(Base):
     __tablename__ = "user_problem"
     user_id = Column(Integer, primary_key=True)
     problem_cd = Column(String(30), primary_key=True)
@@ -44,7 +60,7 @@ class UserProblem(Base):
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
 
-class Log(Base):
+class LogDto(Base):
     __tablename__ = "log"
     id = Column(Integer, Sequence('id_seq'), primary_key=True)
     user_id = Column(Integer)
@@ -56,7 +72,7 @@ class Log(Base):
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
 
-class Submission(Base):
+class SubmissionDto(Base):
     __tablename__ = "submission"
     id = Column(Integer, Sequence('id_seq'), primary_key=True)
     user_id = Column(Integer)
@@ -67,7 +83,7 @@ class Submission(Base):
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
 
-class Message(Base):
+class MessageDto(Base):
     __tablename__ = "message"
     id = Column(Integer, Sequence('id_seq'), primary_key=True)
     user_id = Column(Integer)

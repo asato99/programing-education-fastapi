@@ -10,6 +10,13 @@ class ProblemData():
         format=1,
         kubun=1)
 
+    back_end_coding = ProblemInfo(
+        problemCd='back_end_coding_problem',
+        title='test back title',
+        question='test back question',
+        format=1,
+        kubun=2)
+
     description = ProblemInfo(
         problemCd='description_problem',
         title='test description title',

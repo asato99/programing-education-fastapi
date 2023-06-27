@@ -5,7 +5,7 @@ from sqlalchemy import pool
 import sys
 sys.path.append("..")
 from app.db.setting import Base
-from app.db.tables import Problem
+from app.db.tables import ProblemDto
 
 from alembic import context
 
