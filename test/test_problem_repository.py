@@ -143,6 +143,49 @@ class TestProblemRepository(unittest.TestCase):
         # after
         ProblemRepository.delete(problem)
 
+    # @unittest.skip("temporary test")
+    def test_get_description_problem(self):
+        # arrange
+        problem_info = ProblemData.description
+        problem = DescriptionProblem(problem_info.problemCd)
+        problem.set_model_answer('test answer')
+
+        # action
+        ProblemRepository.regist(problem)
+        problem = ProblemRepository.find_by_problem_cd(problem_info.problemCd)
+
+        # assert
+        expected = 'test answer'
+        actual = problem.get_model_answer()
+        self.assertEqual(expected, actual)
+
+        # after
+        ProblemRepository.delete(problem)
+
+    # @unittest.skip("temporary test")
+    def test_get_select_problem(self):
+        # arrange
+        problem_info = ProblemData.select
+        problem = SelectProblem(problem_info.problemCd)
+        options = [
+            SelectProblemOption(no=1, text='test1'),
+            SelectProblemOption(no=2, text='test2'),
+            SelectProblemOption(no=3, text='test3'),
+        ]
+        problem.set_options(options)
+
+        # action
+        ProblemRepository.regist(problem)
+        problem = ProblemRepository.find_by_problem_cd(problem_info.problemCd)
+
+        # assert
+        expected = 'test1'
+        actual = problem.get_options()[0].text
+        self.assertEqual(expected, actual)
+
+        # after
+        ProblemRepository.delete(problem)
+
     @unittest.skip("temporary test")
     def test_get_all_problems(self):
         # arrange

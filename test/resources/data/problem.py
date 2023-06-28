@@ -21,22 +21,20 @@ class ProblemData():
         problemCd='description_problem',
         title='test description title',
         question='test description question',
-        format=2,
-        kubun=1)
+        answer='test answer',
+        format=2)
 
     select = ProblemInfo(
         problemCd='select_problem',
         title='test select title',
         question='test select question',
-        format=3,
-        kubun=1)
+        format=3)
 
     exception = ProblemInfo(
         problemCd='exception_problem',
         title='test exception title',
         question='test exception question',
-        format=0,
-        kubun=1)
+        format=0)
 
     php_input = UserInput(
         lang="php",

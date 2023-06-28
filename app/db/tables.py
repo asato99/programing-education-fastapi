@@ -8,6 +8,7 @@ from typing import Optional
 class ProblemDto(Base):
     __tablename__ = "problem"
     problem_cd = Column(String(30), primary_key=True)
+    admin_id = Column(Integer)
     format = Column(Integer)
     title = Column(String(50))
     question = Column(Text())

@@ -1,6 +1,6 @@
 from app.db import setting
 from app.db.tables import ProblemDto, CodingProblemDto, CodingKubunDto, DescriptionProblemDto, SelectProblemOptionDto, SelectProblemAnswerDto
-from app.types.problem import ProblemInfo
+from app.types.problem import ProblemInfo, SelectProblemOption
 from app.models.problem import Problem, CodingProblem, FrontEndCoding, BackEndCoding, Problems
 from app.factories.problem_factory import ProblemFactory
 
@@ -151,10 +151,18 @@ class ProblemRepository():
 
                 problem.set_coding_type(back_end_coding)
 
+
         elif problem.get_problem_format() == Problem.DESCRIPTION_FORMAT:
             description_dto = session.query(DescriptionProblemDto).filter(DescriptionProblemDto.problem_cd==problem.get_problem_cd()).first()
             problem.set_model_answer(description_dto.model_answer)
 
+
+        elif problem.get_problem_format() == Problem.SELECT_FORMAT:
+            select_option_dtos = session.query(SelectProblemOptionDto).filter(SelectProblemOptionDto.problem_cd==problem.get_problem_cd()).all()
+            select_answer_dto = session.query(SelectProblemAnswerDto).filter(SelectProblemAnswerDto.problem_cd==problem.get_problem_cd()).first()
+            options = [SelectProblemOption(no=dto.option_no, text=dto.option_text) for dto in select_option_dtos]
+            problem.set_options(options)
+            problem.set_answer(select_answer_dto.answer)
 
 
         return problem

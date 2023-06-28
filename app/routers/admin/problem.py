@@ -10,5 +10,8 @@ router = APIRouter(
 
 @router.post('/create')
 def create(param: ProblemInfo):
-	problem = ProblemFactory.create(param)
-	return
+    problem = ProblemFactory.create(param)
+    print('created')
+    print(problem.get_problem_format())
+
+    return
