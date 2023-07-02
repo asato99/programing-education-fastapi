@@ -20,7 +20,7 @@ class ProblemDto(Base):
 class CodingProblemDto(Base):
     __tablename__ = "coding_problem"
     problem_cd = Column(String(30), primary_key=True)
-    langage = Column(String(10), primary_key=True)
+    language = Column(String(10), primary_key=True)
     code = Column(Text())
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(

@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 
-dbname = 'tetdb'
+dbname = 'test_tetdb'
 user = 'asatokazu:asato6815kazu'
 host = 'localhost:5432'
 url = f"postgresql://{user}@{host}/{dbname}"
