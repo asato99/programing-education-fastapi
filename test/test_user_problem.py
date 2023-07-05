@@ -23,10 +23,11 @@ class TestProblem(unittest.TestCase):
 		user_problem = UserProblem(
 			self.user_id,
 			problem,
-			messages)
-		user_problem.set_submission(Submission(
-			self.user_id,
-			description.problemCd))
+			messages,
+			Submission(
+				self.user_id,
+				description.problemCd,
+				Submission.UNSUBMITTED))
 
 		# assert
 		expected = description.problemCd

@@ -5,7 +5,6 @@ from app.models.problem import Problem, CodingProblem, FrontEndCoding, BackEndCo
 from app.factories.problem_factory import ProblemFactory
 
 class ProblemRepository():
-
     def __init__(self, session):
         self.session = session
 

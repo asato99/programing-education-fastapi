@@ -1,9 +1,12 @@
 class UserProblem():
-	def __init__(self, user_id, problem, messages):
+	def __init__(self, user_id, problem, messages, submission):
 		self.user_id = user_id
 		self.problem = problem
 		self.messages = messages
-		self.submission = {}
+		self.submission = submission
+
+	def get_user_id(self):
+		return self.user_id
 
 	def get_problem_cd(self):
 		return self.problem.get_problem_cd()
@@ -13,9 +16,6 @@ class UserProblem():
 
 	def get_problem_format(self):
 		return self.problem.get_problem_format()
-
-	def set_submission(self, submission):
-		self.submission = submission
 
 	def submit(self, submission, repository):
 		self.submission.add_submission(submission, repository)
