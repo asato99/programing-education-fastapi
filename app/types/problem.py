@@ -1,16 +1,35 @@
 from pydantic import BaseModel 
 from typing import Optional
 
+class FrontEndProblemInfo(BaseModel):
+	html: str
+	javascript: str
+	css: str
+
+class BackEndProblemInfo(BaseModel):
+	php_code: str
+	python_code: str
+
+class CodingProblemInfo(BaseModel):
+	kubun: int
+	front_end_problem: Optional[FrontEndProblemInfo] = None
+	back_end_problem: Optional[BackEndProblemInfo] = None
+
+class DescriptionProblemInfo(BaseModel):
+	model_answer: str
+
+class SelectProblemInfo(BaseModel):
+	options: list
+	answer: int
+
 class ProblemInfo(BaseModel):
-	problemCd: str
+	problem_cd: str
 	format: int
-	kubun: Optional[int] = None
 	title: Optional[str] = ''
 	question: Optional[str] = ''
-	codeList: Optional[list] = []
-	inputCode: Optional[str] = ''
-	options: Optional[list] = []
-	answer: Optional[str] = ''
+	coding_problem: Optional[CodingProblemInfo] = None
+	description_problem: Optional[DescriptionProblemInfo] = None
+	select_problem: Optional[SelectProblemInfo] = None
 
 class SelectProblemOption(BaseModel):
 	no: int
