@@ -8,14 +8,21 @@ class ProblemData():
         title='test front title',
         question='test front question',
         format=1,
-        coding_problem=CodingProblemInfo(kubun=1))
+        coding_problem=CodingProblemInfo(
+            kubun=1, front_end_problem=FrontEndProblemInfo(
+                html='test html',
+                javascript='test js',
+                css='test css')))
 
     back_end_coding = ProblemInfo(
         problem_cd='back_end_coding_problem',
         title='test back title',
         question='test back question',
         format=1,
-        coding_problem=CodingProblemInfo(kubun=2))
+        coding_problem=CodingProblemInfo(
+            kubun=2, back_end_problem=BackEndProblemInfo(
+                php_code='test php',
+                python_code='test python')))
 
     description = ProblemInfo(
         problem_cd='description_problem',

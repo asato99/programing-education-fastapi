@@ -9,7 +9,7 @@ class ProblemFactory():
 
             if problem_info.coding_problem.kubun == CodingProblem.FRONTEND:
                 problem.set_coding_type(FrontEndCoding())
-            elif problem_info.kubun == CodingProblem.BACKEND:
+            elif problem_info.coding_problem.kubun == CodingProblem.BACKEND:
                 problem.set_coding_type(BackEndCoding())
 
         elif problem_info.format == ProblemConstants.DESCRIPTION_FORMAT:

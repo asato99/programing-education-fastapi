@@ -1,24 +1,24 @@
-from app.types.problem import ProblemInfo
-from app.db.tables import Problem, CodingProblem
+from app.types.problem import ProblemInfo, FrontEndProblemInfo, BackEndProblemInfo
+from app.models.problem import Problem, CodingProblem
 
 class ProblemService():
 
     @classmethod
     def set_problem_info(cls, problem, problem_info: ProblemInfo):
-        problem.set_title(param.title)
-        problem.set_question(param.question)
+        problem.set_title(problem_info.title)
+        problem.set_question(problem_info.question)
 
         if problem.get_problem_format() == Problem.CODING_FORMAT:
             if problem.get_coding_type().get_coding_kubun() == CodingProblem.FRONTEND:
-                self.__set_fp_info(problem, problem_info)
+                cls.__set_fp_info(problem, problem_info.coding_problem.front_end_problem)
             elif problem.get_coding_type().get_coding_kubun() == CodingProblem.BACKEND:
-                self.__set_fp_info(problem, problem_info)
+                cls.__set_bp_info(problem, problem_info.coding_problem.back_end_problem)
 
-    def __set_fp_info(problem, problem_info: ProblemInfo):
-        problem.get_coding_type().set_html(problem_info.html)
-        problem.get_coding_type().set_javascript(problem_info.javascript)
-        problem.get_coding_type().set_css(problem_info.css)
+    def __set_fp_info(problem, front_end_problem_info: FrontEndProblemInfo):
+        problem.get_coding_type().set_html(front_end_problem_info.html)
+        problem.get_coding_type().set_javascript(front_end_problem_info.javascript)
+        problem.get_coding_type().set_css(front_end_problem_info.css)
 
-    def __set_bp_info(problem, problem_info: ProblemInfo):
-        problem.get_coding_type().set_php_code(problem_info.html)
-        problem.get_coding_type().set_python_code(problem_info.javascript)
+    def __set_bp_info(problem, back_end_problem_info: BackEndProblemInfo):
+        problem.get_coding_type().set_php_code(back_end_problem_info.php_code)
+        problem.get_coding_type().set_python_code(back_end_problem_info.python_code)
