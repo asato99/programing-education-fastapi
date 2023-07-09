@@ -52,6 +52,30 @@ class SelectProblemAnswerDto(Base):
     problem_cd = Column(String(30), primary_key=True)
     answer = Column(Integer)
 
+class UserDto(Base):
+    __tablename__ = "user"
+    user_id = Column(Integer, primary_key=True, autoincrement=True)
+    admin_id = Column(Integer)
+    user_cd = Column(String(30))
+    user_name = Column(String(15))
+    password = Column(String(30))
+    mail = Column(String(30))
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+    )
+
+class TantoDto(Base):
+    __tablename__ = "tanto"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer)
+    name = Column(String(30))
+    mail = Column(String(30))
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+    )
+
 class UserProblemDto(Base):
     __tablename__ = "user_problem"
     user_id = Column(Integer, primary_key=True)

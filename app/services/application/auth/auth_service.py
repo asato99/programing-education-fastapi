@@ -1,7 +1,5 @@
 from fastapi import Header, HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from config import db
-import psycopg2 as pg
 
 import hashlib
 import random

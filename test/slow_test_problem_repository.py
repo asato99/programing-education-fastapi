@@ -21,7 +21,7 @@ class TestProblemRepositoryRegist(unittest.TestCase):
     def test_regist(self):
         # arrange
         problem_info = ProblemData.front_end_coding
-        problem = Problem(problem_info.problemCd)
+        problem = Problem(problem_info.problem_cd)
 
         # action
         problemRepository = ProblemRepository(self.session)
@@ -37,18 +37,18 @@ class TestProblemRepositorySave(unittest.TestCase):
         self.session.query(CodingKubunDto).delete()
         problem_info = ProblemData.front_end_coding
         problem_dto = ProblemDto(
-            problem_cd=problem_info.problemCd,
+            problem_cd=problem_info.problem_cd,
             format=problem_info.format,
             admin_id=1,
             title=problem_info.title,
             question=problem_info.question)
         coding_problem_dto = CodingProblemDto(
-            problem_cd=problem_info.problemCd,
+            problem_cd=problem_info.problem_cd,
             language='html',
             code='')
         coding_kubun_dto = CodingKubunDto(
-            problem_cd=problem_info.problemCd,
-            kubun=problem_info.kubun)
+            problem_cd=problem_info.problem_cd,
+            kubun=problem_info.coding_problem.kubun)
 
         self.session.add(problem_dto)
         self.session.add(coding_problem_dto)
@@ -59,7 +59,7 @@ class TestProblemRepositorySave(unittest.TestCase):
     def test_save(self):
         # arrange
         problem_info = ProblemData.front_end_coding
-        problem = CodingProblem(problem_info.problemCd)
+        problem = CodingProblem(problem_info.problem_cd)
         problem.set_coding_type(FrontEndCoding())
         problem.set_question('update question')
 
@@ -77,18 +77,18 @@ class TestProblemRepositoryDelete(unittest.TestCase):
         self.session.query(CodingKubunDto).delete()
         problem_info = ProblemData.front_end_coding
         problem_dto = ProblemDto(
-            problem_cd=problem_info.problemCd,
+            problem_cd=problem_info.problem_cd,
             format=problem_info.format,
             admin_id=1,
             title=problem_info.title,
             question=problem_info.question)
         coding_problem_dto = CodingProblemDto(
-            problem_cd=problem_info.problemCd,
+            problem_cd=problem_info.problem_cd,
             language='html',
             code='')
         coding_kubun_dto = CodingKubunDto(
-            problem_cd=problem_info.problemCd,
-            kubun=problem_info.kubun)
+            problem_cd=problem_info.problem_cd,
+            kubun=problem_info.coding_problem.kubun)
 
         self.session.add(problem_dto)
         self.session.add(coding_problem_dto)
@@ -99,7 +99,7 @@ class TestProblemRepositoryDelete(unittest.TestCase):
     def test_delete(self):
         # arrange
         problem_info = ProblemData.front_end_coding
-        problem = Problem(problem_info.problemCd)
+        problem = Problem(problem_info.problem_cd)
 
         # action
         problemRepository = ProblemRepository(self.session)
@@ -115,18 +115,18 @@ class TestProblemRepositoryFind(unittest.TestCase):
         self.session.query(CodingKubunDto).delete()
         problem_info = ProblemData.front_end_coding
         problem_dto = ProblemDto(
-            problem_cd=problem_info.problemCd,
+            problem_cd=problem_info.problem_cd,
             format=problem_info.format,
             admin_id=1,
             title=problem_info.title,
             question=problem_info.question)
         coding_problem_dto = CodingProblemDto(
-            problem_cd=problem_info.problemCd,
+            problem_cd=problem_info.problem_cd,
             language='html',
             code='')
         coding_kubun_dto = CodingKubunDto(
-            problem_cd=problem_info.problemCd,
-            kubun=problem_info.kubun)
+            problem_cd=problem_info.problem_cd,
+            kubun=problem_info.coding_problem.kubun)
 
         self.session.add(problem_dto)
         self.session.add(coding_problem_dto)
@@ -140,8 +140,40 @@ class TestProblemRepositoryFind(unittest.TestCase):
 
         # action
         problemRepository = ProblemRepository(self.session)
-        problem = problemRepository.find_by_problem_cd(problem_info.problemCd)
+        problem = problemRepository.find_by_problem_cd(problem_info.problem_cd)
 
+class TestProblemRepositoryFindList(unittest.TestCase):
+    def setUp(self):
+        # self.skipTest("depends on db")
+        self.session = setting.get_session()
+        self.session.query(ProblemDto).delete()
+        self.session.query(CodingProblemDto).delete()
+        self.session.query(CodingKubunDto).delete()
+        problem_info = ProblemData.front_end_coding
+        problem_dto = ProblemDto(
+            problem_cd=problem_info.problem_cd,
+            format=problem_info.format,
+            admin_id=1,
+            title=problem_info.title,
+            question=problem_info.question)
+        coding_problem_dto = CodingProblemDto(
+            problem_cd=problem_info.problem_cd,
+            language='html',
+            code='')
+        coding_kubun_dto = CodingKubunDto(
+            problem_cd=problem_info.problem_cd,
+            kubun=problem_info.coding_problem.kubun)
+
+        self.session.add(problem_dto)
+        self.session.add(coding_problem_dto)
+        self.session.add(coding_kubun_dto)
+        self.session.commit()
+
+    # @unittest.skip("temporary test")
+    def test_find_all(self):
+        # action
+        problemRepository = ProblemRepository(self.session)
+        problems = problemRepository.find_all()
 
 if __name__ == "__main__":
     unittest.main()

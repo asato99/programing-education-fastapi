@@ -1,5 +1,5 @@
 from pydantic import BaseModel 
-from typing import Optional
+from typing import Optional, List
 
 class FrontEndProblemInfo(BaseModel):
 	html: str
@@ -18,8 +18,12 @@ class CodingProblemInfo(BaseModel):
 class DescriptionProblemInfo(BaseModel):
 	model_answer: str
 
+class SelectProblemOption(BaseModel):
+	no: int
+	text: str
+
 class SelectProblemInfo(BaseModel):
-	options: list
+	options: List[SelectProblemOption]
 	answer: int
 
 class ProblemInfo(BaseModel):
@@ -30,10 +34,6 @@ class ProblemInfo(BaseModel):
 	coding_problem: Optional[CodingProblemInfo] = None
 	description_problem: Optional[DescriptionProblemInfo] = None
 	select_problem: Optional[SelectProblemInfo] = None
-
-class SelectProblemOption(BaseModel):
-	no: int
-	text: str
 
 class UserInput(BaseModel):
 	lang: str

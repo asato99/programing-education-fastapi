@@ -50,10 +50,13 @@ class Problem():
     #
     #   methods
     #
-    def get_header(self):
+    def export(self):
+        pass
+
+    def export_header(self):
         return {
             'problem_cd': self.get_problem_cd(),
-            'problem_format':self.get_format(),
+            'format':self.get_problem_format(),
             'title':self.get_title(),
             'question':self.get_question(),
         }
@@ -83,6 +86,16 @@ class CodingProblem(Problem):
 
     def execute(self, user_input: UserInput):
         return self.coding.execute(user_input)
+
+    def export(self):
+        return {
+            'problem_cd': self.get_problem_cd(),
+            'format': self.get_problem_format(),
+            'title': self.get_title(),
+            'question': self.get_question(),
+            'kubun': self.get_coding_kubun(),
+            'codes': self.get_coding_type(),
+        }
         
         
 class FrontEndCoding():
@@ -169,6 +182,15 @@ class DescriptionProblem(Problem):
     def get_model_answer(self):
         return self.model_answer
 
+    def export(self):
+        return {
+            'problem_cd': self.get_problem_cd(),
+            'format': self.get_problem_format(),
+            'title': self.get_title(),
+            'question': self.get_question(),
+            'model_answer': self.get_model_answer(),
+        }
+
 class SelectProblem(Problem):
     def __init__(self, problem_cd):
         super().__init__(problem_cd)
@@ -190,6 +212,16 @@ class SelectProblem(Problem):
     def get_answer(self):
         return self.answer
 
+    def export(self):
+        return {
+            'problem_cd': self.get_problem_cd(),
+            'format': self.get_problem_format(),
+            'title': self.get_title(),
+            'question': self.get_question(),
+            'options': self.get_options(),
+            'answer': self.get_answer(),
+        }
+
 class Problems():
     def __init__(self, problem_list):
         self.problem_list = problem_list
@@ -201,6 +233,7 @@ class Problems():
                 'problem_cd': problem.get_problem_cd(),
                 'format': problem.get_problem_format(),
                 'title': problem.get_title(),
+                'created_at': format(problem.get_created_at(), '%Y年%m月%d日')
             }
             headers.append(header)
         return headers

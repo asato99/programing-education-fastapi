@@ -1,6 +1,7 @@
 import sys
 sys.path.append("../../../")
-from app.types.problem import ProblemInfo, CodingProblemInfo, FrontEndProblemInfo, BackEndProblemInfo, UserInput
+from app.types.problem import ProblemInfo, CodingProblemInfo, FrontEndProblemInfo
+from app.types.problem import BackEndProblemInfo, DescriptionProblemInfo, SelectProblemInfo, SelectProblemOption, UserInput 
 
 class ProblemData():
     front_end_coding = ProblemInfo(
@@ -28,13 +29,25 @@ class ProblemData():
         problem_cd='description_problem',
         title='test description title',
         question='test description question',
-        format=2)
+        format=2,
+        description_problem=DescriptionProblemInfo(
+            model_answer='test model answer'
+        ))
 
     select = ProblemInfo(
         problem_cd='select_problem',
         title='test select title',
         question='test select question',
-        format=3)
+        format=3,
+        select_problem=SelectProblemInfo(
+            options=[
+                SelectProblemOption(
+                    no=1,
+                    text='test1'
+                )
+            ],
+            answer=1
+        ))
 
     exception = ProblemInfo(
         problem_cd='exception_problem',

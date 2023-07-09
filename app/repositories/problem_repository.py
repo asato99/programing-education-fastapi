@@ -1,6 +1,6 @@
 from app.db import setting
 from app.db.tables import ProblemDto, CodingProblemDto, CodingKubunDto, DescriptionProblemDto, SelectProblemOptionDto, SelectProblemAnswerDto
-from app.types.problem import ProblemInfo, SelectProblemOption
+from app.types.problem import ProblemInfo, CodingProblemInfo, SelectProblemOption
 from app.models.problem import Problem, CodingProblem, FrontEndCoding, BackEndCoding, Problems
 from app.factories.problem_factory import ProblemFactory
 
@@ -170,7 +170,16 @@ class ProblemRepository():
         self.session.commit()
 
     def find_by_problem_cd(self, problem_cd):
-        problem_dto = self.session.query(ProblemDto).filter(ProblemDto.problem_cd==problem_cd).first()
+        problem_dto = self.session.query(
+            ProblemDto.problem_cd,
+            ProblemDto.format,
+            ProblemDto.title,
+            ProblemDto.question,
+            ProblemDto.created_at,
+            CodingKubunDto.kubun).outerjoin(
+                CodingKubunDto,
+                ProblemDto.problem_cd == CodingKubunDto.problem_cd).filter(
+                    ProblemDto.problem_cd==problem_cd).first()
 
         problem = self.__create_problem(problem_dto)
         problem.set_title(problem_dto.title)
@@ -220,8 +229,15 @@ class ProblemRepository():
 
         return problem
 
-    def findAll(self):
-        problem_dtos = self.session.query(ProblemDto).all()
+    def find_all(self):
+        problem_dtos = self.session.query(
+            ProblemDto.problem_cd,
+            ProblemDto.format,
+            ProblemDto.title,
+            ProblemDto.question,
+            ProblemDto.created_at,
+            CodingKubunDto.kubun).outerjoin(
+                CodingKubunDto, ProblemDto.problem_cd == CodingKubunDto.problem_cd).all()
 
         problem_list = []
         for dto in problem_dtos:
@@ -233,10 +249,16 @@ class ProblemRepository():
         return problems
 
     def __create_problem(self, dto):
-        problem = ProblemFactory.create(
-            ProblemInfo(problemCd=dto.problem_cd, format=dto.format))
+        problem_info = ProblemInfo(
+            problem_cd=dto.problem_cd,
+            format=dto.format)
+        if dto.format == Problem.CODING_FORMAT:
+            problem_info.coding_problem = CodingProblemInfo(
+                kubun=dto.kubun)
+        problem = ProblemFactory.create(problem_info)
         problem.set_title(dto.title)
         problem.set_question(dto.question)
+        problem.set_created_at(dto.created_at)
         return problem
 
         
