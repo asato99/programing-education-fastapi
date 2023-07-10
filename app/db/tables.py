@@ -53,7 +53,7 @@ class SelectProblemAnswerDto(Base):
     answer = Column(Integer)
 
 class UserDto(Base):
-    __tablename__ = "user"
+    __tablename__ = "user_tbl"
     user_id = Column(Integer, primary_key=True, autoincrement=True)
     admin_id = Column(Integer)
     user_cd = Column(String(30))

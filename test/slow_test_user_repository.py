@@ -18,6 +18,7 @@ class TestProblemRepositoryRegist(unittest.TestCase):
         self.user_repository = UserRepository(self.session)
 
         self.admin_id = 1
+        self.user_id = 1
         self.user_cd = 'user'
         self.user_name = 'user_name'
 
@@ -26,8 +27,9 @@ class TestProblemRepositoryRegist(unittest.TestCase):
         # arrange
         user = User(
             admin_id=self.admin_id,
-            user_cd=self.user_cd
+            user_id=self.user_id
         )
+        user.set_cd(self.user_cd)
         user.set_name(self.user_name)
         tanto1 = Tanto()
         tanto1.set_name('tanto1')
@@ -39,11 +41,11 @@ class TestProblemRepositoryRegist(unittest.TestCase):
         tanto2.set_mail('tanto2_mail')
         user.add_tanto(tanto2)
 
-        self.user_repository(user)
+        self.user_repository.regist(user)
 
-        user_dto = self.session.query(UserDto).filter(UserDto.cd==self.user_cd).first()
+        user_dto = self.session.query(UserDto).filter(UserDto.user_cd==self.user_cd).first()
         expected = self.user_name
-        actual = user_dto.name
+        actual = user_dto.user_name
         self.assertEqual(expected, actual)
 
 if __name__ == "__main__":
