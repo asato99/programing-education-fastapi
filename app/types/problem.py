@@ -38,13 +38,3 @@ class ProblemInfo(BaseModel):
 class UserInput(BaseModel):
 	lang: str
 	code: str
-
-class Constants():
-	NONE_FORMAT = 0
-	CODING_FORMAT = 1
-	DESCRIPTION_FORMAT = 2
-	SELECT_FORMAT = 3
-	
-	# 区分
-	FRONTEND = 1
-	BACKEND = 2

@@ -4,7 +4,6 @@ import sys
 sys.path.append("..")
 from app.factories.problem_factory import ProblemFactory
 from app.models.problem import Problem, CodingProblem, FrontEndCoding, BackEndCoding
-from app.types.problem import Constants
 from resources.data.problem import ProblemData
 
 class TestProblem(unittest.TestCase):
@@ -28,7 +27,7 @@ class TestProblem(unittest.TestCase):
         problem = CodingProblem(problem_cd='test')
 
         # action
-        expected = Constants.CODING_FORMAT
+        expected = Problem.CODING_FORMAT
         actual = problem.get_problem_format()
 
         # assert
@@ -40,7 +39,7 @@ class TestProblem(unittest.TestCase):
         problem = CodingProblem(problem_cd='test')
 
         # action
-        expected = Constants.CODING_FORMAT
+        expected = Problem.CODING_FORMAT
         actual = problem.get_problem_format()
 
         # assert

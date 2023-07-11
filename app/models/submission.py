@@ -8,10 +8,27 @@ class Submission():
 		self.user_id = user_id
 		self.problem_cd = problem_cd
 		self.status = status
+		self.adding = []
+		self.removing = []
 
 	def set_status(self, status):
 		self.status = status
-		
-	def add_submission(self, submission, repository):
-		repository.add_submission(self.user_id, self.problem_cd, submission)
+
+	def get_status(self):
+		return self.status
+
+	def approve(self):
+		self.status = self.APPROVED
+
+	def disapprove(self):
+		self.status = self.NON_APPROVED
+
+	def add_submission(self, submission):
 		self.status = self.SUBMITTED
+		self.adding.append(submission)
+
+	def reset_adding(self):
+		self.adding = []
+
+	def get_adding(self):
+		return self.adding

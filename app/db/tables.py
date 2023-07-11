@@ -57,7 +57,7 @@ class UserDto(Base):
     user_id = Column(Integer, primary_key=True, autoincrement=True)
     admin_id = Column(Integer)
     user_cd = Column(String(30))
-    user_name = Column(String(15))
+    user_name = Column(String(30))
     password = Column(String(30))
     mail = Column(String(30))
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
@@ -80,6 +80,7 @@ class UserProblemDto(Base):
     __tablename__ = "user_problem"
     user_id = Column(Integer, primary_key=True)
     problem_cd = Column(String(30), primary_key=True)
+    status = Column(Integer)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
@@ -87,7 +88,7 @@ class UserProblemDto(Base):
 
 class LogDto(Base):
     __tablename__ = "log"
-    id = Column(Integer, Sequence('id_seq'), primary_key=True)
+    id = Column(Integer, Sequence('log_id_seq'), primary_key=True)
     user_id = Column(Integer)
     problem_cd = Column(String(30))
     lang = Column(String(10))
@@ -99,7 +100,7 @@ class LogDto(Base):
 
 class SubmissionDto(Base):
     __tablename__ = "submission"
-    id = Column(Integer, Sequence('id_seq'), primary_key=True)
+    id = Column(Integer, Sequence('submission_id_seq'), primary_key=True)
     user_id = Column(Integer)
     problem_cd = Column(String(30))
     submission = Column(Text())
@@ -110,7 +111,7 @@ class SubmissionDto(Base):
 
 class MessageDto(Base):
     __tablename__ = "message"
-    id = Column(Integer, Sequence('id_seq'), primary_key=True)
+    id = Column(Integer, Sequence('message_id_seq'), primary_key=True)
     user_id = Column(Integer)
     problem_cd = Column(String(30))
     message = Column(Text())

@@ -1,4 +1,4 @@
-from app.types.problem import ProblemInfo, UserInput, Constants
+from app.types.problem import ProblemInfo, UserInput 
 from app.services.domain.exe_service import ExeService
 
 class Problem():
@@ -33,7 +33,7 @@ class Problem():
         return self.question
 
     def get_problem_format(self):
-        return Constants.NONE_FORMAT
+        return self.NONE_FORMAT
 
     def set_created_at(self, created_at):
         self.created_at = created_at
@@ -73,7 +73,7 @@ class CodingProblem(Problem):
         self.coding= NullCoding()
 
     def get_problem_format(self):
-        return Constants.CODING_FORMAT
+        return self.CODING_FORMAT
 
     def set_coding_type(self, coding):
         self.coding= coding
@@ -174,7 +174,7 @@ class DescriptionProblem(Problem):
         self.model_answer = ''
 
     def get_problem_format(self):
-        return Constants.DESCRIPTION_FORMAT
+        return self.DESCRIPTION_FORMAT
 
     def set_model_answer(self, model_answer):
         self.model_answer = model_answer
@@ -189,6 +189,7 @@ class DescriptionProblem(Problem):
             'title': self.get_title(),
             'question': self.get_question(),
             'model_answer': self.get_model_answer(),
+            'created_at': format(self.get_created_at(), '%Y年%m月%d日')
         }
 
 class SelectProblem(Problem):
@@ -198,7 +199,7 @@ class SelectProblem(Problem):
         self.answer = 0
 
     def get_problem_format(self):
-        return Constants.SELECT_FORMAT
+        return self.SELECT_FORMAT
 
     def set_options(self, options):
         self.options = options

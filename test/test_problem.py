@@ -4,7 +4,6 @@ sys.path.append("..")
 from app.factories.problem_factory import ProblemFactory
 from app.repositories.problem_repository import ProblemRepository
 from app.models.problem import Problem
-from app.types.problem import Constants
 from resources.data.problem import ProblemData
 
 class TestProblem(unittest.TestCase):
@@ -40,7 +39,7 @@ class TestProblem(unittest.TestCase):
         problem = Problem(problem_cd='test')
 
         # action
-        expected = Constants.NONE_FORMAT
+        expected = Problem.NONE_FORMAT
         actual = problem.get_problem_format()
 
         # assert

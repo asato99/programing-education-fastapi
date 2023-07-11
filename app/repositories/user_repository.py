@@ -1,3 +1,5 @@
+from app.models.user import User, Users
+from app.models.tanto import Tanto
 from app.db.tables import UserDto, TantoDto
 
 class UserRepository():
@@ -26,11 +28,62 @@ class UserRepository():
 
 		self.session.commit()
 
-	def save(self, user_problem):
-		pass
+	def save(self, user):
+		user_dto = self.session.query(UserDto).filter(UserDto.user_id==user.get_user_id()).one()
+		user_dto.user_name = user.get_name()
+		user_dto.password = user.get_password()
+		user_dto.mail = user.get_mail()
+		
+		self.session.query(TantoDto).filter(TantoDto.user_id==user.get_user_id()).delete()
+		for tanto in user.get_tantos():
+			tanto_dto = TantoDto(
+				name=tanto.get_name(),
+				mail=tanto.get_mail())
+			self.session.add(tanto_dto)
 
-	def destroy(self, user_problem):
-		pass
+		self.session.commit()
 
-	def get_user_problem_by_user_id_and_problem_cd(self, user_id, problem_cd):
-		pass
+	def delete(self, user):
+		self.session.query(UserDto).filter(UserDto.user_id==user.get_user_id()).delete()
+		self.session.query(TantoDto).filter(TantoDto.user_id==user.get_user_id()).delete()
+
+		self.session.commit()
+
+	def find_by_id(self, user_id):
+		user_dto = self.session.query(UserDto).filter(UserDto.user_id==user_id).one()
+		user = User(
+			admin_id=user_dto.admin_id,
+			user_id=user_dto.user_id,
+		)
+		self.__set_user_info(user, user_dto)
+
+		return user
+
+	def find_all(self, admin_id):
+		user_dtos = self.session.query(UserDto).filter(UserDto.admin_id==admin_id).all()
+		users = Users(admin_id)
+		for user_dto in user_dtos:
+			user = User(
+				admin_id=admin_id,
+				user_id=user_dto.user_id,
+			)
+			self.__set_user_info(user, user_dto)
+			users.add_user(user)
+
+		return users
+
+	def __set_user_info(self, user, dto):
+		user.set_cd(dto.user_cd)
+		user.set_name(dto.user_name) 
+		user.set_mail(dto.mail) 
+		user.set_password(dto.password) 
+		user.set_created_at(dto.created_at)
+
+		user.reset_tantos()
+		tanto_dtos = self.session.query(TantoDto).filter(TantoDto.user_id==dto.user_id).all()
+		for tanto_dto in tanto_dtos:
+			tanto = Tanto()
+			tanto.set_name(tanto_dto.name)
+			tanto.set_mail(tanto_dto.mail)
+			user.add_tanto(tanto)
+		

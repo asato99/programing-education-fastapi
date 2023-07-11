@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append("..")
 from app.factories.problem_factory import ProblemFactory
-from app.types.problem import Constants
+from app.models.problem import Problem
 from resources.data.problem import ProblemData
 
 class TestProblemFactory(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestProblemFactory(unittest.TestCase):
         problem = ProblemFactory.create(problem_info)
 
         # assert
-        expected = Constants.CODING_FORMAT
+        expected = Problem.CODING_FORMAT
         actual = problem.get_problem_format()
         self.assertEqual(expected, actual)
 
@@ -27,7 +27,7 @@ class TestProblemFactory(unittest.TestCase):
         problem = ProblemFactory.create(problem_info)
 
         # assert
-        expected = Constants.DESCRIPTION_FORMAT
+        expected = Problem.DESCRIPTION_FORMAT
         actual = problem.get_problem_format()
         self.assertEqual(expected, actual)
 
@@ -39,7 +39,7 @@ class TestProblemFactory(unittest.TestCase):
         problem = ProblemFactory.create(problem_info)
 
         # assert
-        expected = Constants.SELECT_FORMAT
+        expected = Problem.SELECT_FORMAT
         actual = problem.get_problem_format()
         self.assertEqual(expected, actual)
 
@@ -51,7 +51,7 @@ class TestProblemFactory(unittest.TestCase):
         problem = ProblemFactory.create(problem_info)
 
         # assert
-        expected = Constants.NONE_FORMAT
+        expected = Problem.NONE_FORMAT
         actual = problem.get_problem_format()
         self.assertEqual(expected, actual)
 

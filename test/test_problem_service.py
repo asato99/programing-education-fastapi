@@ -3,7 +3,6 @@ import sys
 sys.path.append("..")
 from app.factories.problem_factory import ProblemFactory
 from app.services.domain.problem_service import ProblemService
-from app.types.problem import Constants
 from resources.data.problem import ProblemData
 
 class TestProblemFactory(unittest.TestCase):

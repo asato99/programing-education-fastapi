@@ -4,10 +4,10 @@ import sys
 sys.path.append("..")
 from app.repositories.problem_repository import ProblemRepository
 from app.models.problem import Problem, CodingProblem, FrontEndCoding, BackEndCoding, DescriptionProblem, SelectProblem 
-from app.types.problem import ProblemInfo, Constants, SelectProblemOption
+from app.types.problem import ProblemInfo, SelectProblemOption
 from app.db.tables import ProblemDto, CodingProblemDto, CodingKubunDto 
-from test.resources.data.problem import ProblemData
-from test.resources.db import setting
+from resources.data.problem import ProblemData
+from resources.db import setting
 
 class TestProblemRepositoryRegist(unittest.TestCase):
     def setUp(self):
