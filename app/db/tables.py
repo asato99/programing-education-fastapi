@@ -5,6 +5,12 @@ from sqlalchemy.types import Integer, String, Text, DateTime
 from datetime import datetime
 from typing import Optional
 
+class AuthTokenDto(Base):
+    __tablename__ = "auth_token"
+    token = Column(String(30), primary_key=True)
+    auth_id = Column(Integer)
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+
 class ProblemDto(Base):
     __tablename__ = "problem"
     problem_cd = Column(String(30), primary_key=True)
