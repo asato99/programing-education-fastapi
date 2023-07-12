@@ -28,9 +28,8 @@ class TestUserRepositoryRegist(unittest.TestCase):
         # arrange
         user = User(
             admin_id=self.admin_id,
-            user_id=self.user_id
+            user_cd=self.user_cd
         )
-        user.set_cd(self.user_cd)
         user.set_name(self.user_name)
         tanto1 = Tanto()
         tanto1.set_name('tanto1')
@@ -80,9 +79,9 @@ class TestUserRepositorySave(unittest.TestCase):
     def test_save(self):
         user = User(
             admin_id=self.admin_id,
-            user_id=self.user_id
+            user_cd=self.user_cd
         )
-        user.set_cd(self.user_cd)
+        user.set_user_id(self.user_id)
         user.set_name(self.update_name)
         tanto1 = Tanto()
         tanto1.set_name('tanto1_update')
@@ -132,8 +131,9 @@ class TestUserRepositoryDelete(unittest.TestCase):
     def test_user_deleted(self):
         user = User(
             admin_id=self.admin_id,
-            user_id=self.user_id
+            user_cd=self.user_cd
         )
+        user.set_user_id(self.user_id)
         tanto1 = Tanto()
         user.add_tanto(tanto1)
 
@@ -147,8 +147,9 @@ class TestUserRepositoryDelete(unittest.TestCase):
     def test_tantos_deleted(self):
         user = User(
             admin_id=self.admin_id,
-            user_id=self.user_id
+            user_cd=self.user_cd
         )
+        user.set_user_id(self.user_id)
         tanto1 = Tanto()
         user.add_tanto(tanto1)
 

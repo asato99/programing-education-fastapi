@@ -2,10 +2,10 @@ import hashlib
 import copy
 
 class User():
-	def __init__(self, admin_id, user_id):
+	def __init__(self, admin_id, user_cd):
+		self.user_id = 0
 		self.admin_id = admin_id
-		self.user_id = user_id
-		self.user_cd = ''
+		self.user_cd = user_cd
 		self.user_name = ''
 		self.password = ''
 		self.mail = ''
@@ -69,9 +69,11 @@ class User():
 
 	def export_header(self):
 		return {
+			'user_id': self.get_user_id(),
 			'user_cd': self.get_cd(),
 			'user_name': self.get_name(),
             'created_at': format(self.get_created_at(), '%Y年%m月%d日'),
+            'accessed_at': format(self.get_created_at(), '%Y/%m/%d %H:%M'),
 		}
 
 class Users():

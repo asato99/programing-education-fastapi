@@ -16,7 +16,7 @@ class TestUserAddTanto(unittest.TestCase):
 		# arrange
 		user = User(
 			admin_id=self.admin_id,
-			user_id=self.user_id)
+			user_cd=self.user_cd)
 		tanto1 = Tanto()
 		tanto2 = Tanto()
 
@@ -32,7 +32,7 @@ class TestUserAddTanto(unittest.TestCase):
 		# arrange
 		user = User(
 			admin_id=self.admin_id,
-			user_id=self.user_id)
+			user_cd=self.user_cd)
 		tanto1 = Tanto()
 		tanto1.set_name('tanto1')
 		tanto2 = Tanto()
@@ -50,7 +50,7 @@ class TestUserAddTanto(unittest.TestCase):
 		# arrange
 		user = User(
 			admin_id=self.admin_id,
-			user_id=self.user_id)
+			user_cd=self.user_cd)
 		tanto1 = Tanto()
 		tanto1.set_name('tanto1')
 		tanto2 = Tanto()

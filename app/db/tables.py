@@ -58,8 +58,9 @@ class UserDto(Base):
     admin_id = Column(Integer)
     user_cd = Column(String(30))
     user_name = Column(String(30))
-    password = Column(String(30))
+    password = Column(String(100))
     mail = Column(String(30))
+    accessed_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
@@ -81,6 +82,7 @@ class UserProblemDto(Base):
     user_id = Column(Integer, primary_key=True)
     problem_cd = Column(String(30), primary_key=True)
     status = Column(Integer)
+    memo = Column(Text)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False

@@ -1,6 +1,6 @@
 from app.models.user import User, Users
 from app.models.tanto import Tanto
-from app.db.tables import UserDto, TantoDto
+from app.db.tables import UserDto, TantoDto, UserProblemDto, LogDto, SubmissionDto, MessageDto
 
 class UserRepository():
 	def __init__(self, session):
@@ -37,6 +37,7 @@ class UserRepository():
 		self.session.query(TantoDto).filter(TantoDto.user_id==user.get_user_id()).delete()
 		for tanto in user.get_tantos():
 			tanto_dto = TantoDto(
+				user_id=user.get_user_id(),
 				name=tanto.get_name(),
 				mail=tanto.get_mail())
 			self.session.add(tanto_dto)
@@ -53,7 +54,7 @@ class UserRepository():
 		user_dto = self.session.query(UserDto).filter(UserDto.user_id==user_id).one()
 		user = User(
 			admin_id=user_dto.admin_id,
-			user_id=user_dto.user_id,
+			user_cd=user_dto.user_cd,
 		)
 		self.__set_user_info(user, user_dto)
 
@@ -65,7 +66,7 @@ class UserRepository():
 		for user_dto in user_dtos:
 			user = User(
 				admin_id=admin_id,
-				user_id=user_dto.user_id,
+				user_cd=user_dto.user_cd,
 			)
 			self.__set_user_info(user, user_dto)
 			users.add_user(user)
@@ -73,7 +74,7 @@ class UserRepository():
 		return users
 
 	def __set_user_info(self, user, dto):
-		user.set_cd(dto.user_cd)
+		user.set_user_id(dto.user_id)
 		user.set_name(dto.user_name) 
 		user.set_mail(dto.mail) 
 		user.set_password(dto.password) 

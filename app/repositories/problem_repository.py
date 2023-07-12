@@ -179,7 +179,7 @@ class ProblemRepository():
             CodingKubunDto.kubun).outerjoin(
                 CodingKubunDto,
                 ProblemDto.problem_cd == CodingKubunDto.problem_cd).filter(
-                    ProblemDto.problem_cd==problem_cd).first()
+                    ProblemDto.problem_cd==problem_cd).one()
 
         problem = self.__create_problem(problem_dto)
         problem.set_title(problem_dto.title)
