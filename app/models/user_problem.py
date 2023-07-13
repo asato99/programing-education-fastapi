@@ -8,9 +8,13 @@ class UserProblem():
 		self.messages = messages
 		self.submission = submission
 		self.memo = ''
+		self.created_at = ''
 
 	def set_memo(self, memo):
 		self.memo = memo
+
+	def set_created_at(self, created_at):
+		self.created_at = created_at
 
 	def get_type(self):
 		return self.NORMAL
@@ -21,14 +25,17 @@ class UserProblem():
 	def get_problem_cd(self):
 		return self.problem.get_problem_cd()
 
+	def get_memo(self):
+		return self.memo
+
+	def get_created_at(self):
+		return self.created_at
+
 	def get_submission_status(self):
 		return self.submission.get_status()
 
 	def get_submit_adding(self):
 		return self.submission.get_adding()
-
-	def get_memo(self):
-		return self.memo
 
 	def submit(self, submission):
 		self.submission.add_submission(submission)
@@ -42,12 +49,16 @@ class UserProblem():
 	def get_messages_adding(self):
 		return self.messages.get_adding()
 
+	def export_problem(self):
+		return self.problem.export()
+
 	def export_header(self):
 		return {
 			'problem_cd': self.problem.get_problem_cd(),
 			'title': self.problem.get_title(),
 			'status': self.submission.get_status(),
 			'format': self.problem.get_problem_format(),
+            'created_at': format(self.get_created_at(), '%Y年%m月%d日')
 		}
 
 
@@ -62,8 +73,8 @@ class CodingUserProblem(UserProblem):
 	def get_logs_adding(self):
 		return self.logs.get_adding()
 
-	def execute(self, user_input):
-		result = self.problem.execute(user_input)
+	def execute(self, code_info):
+		result = self.problem.execute(code_info)
 		self.logs.add_log(result)
 		return result
 

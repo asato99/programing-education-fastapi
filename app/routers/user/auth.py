@@ -10,11 +10,10 @@ router = APIRouter(
 )
 
 class LoginInfo(BaseModel):
-	uqCd: str
-	userCd: str
+	unique_cd: str
+	user_cd: str
 	password: str
 
 @router.post('/login')
 def login(param: LoginInfo):
-	print(param.password)
 	return AuthService.login(param)

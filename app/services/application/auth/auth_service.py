@@ -20,7 +20,7 @@ class AuthService():
 
 		user_dto = session.query(UserDto
 			).filter(UserDto.admin_id==1
-			).filter(UserDto.user_cd==param.problem_cd
+			).filter(UserDto.user_cd==param.user_cd
 			).filter(UserDto.password==password).first()
 
 		if user_dto is None:
@@ -30,9 +30,9 @@ class AuthService():
 				'contents': contents,
 			}
 
-		contents['token'] = ''.join(random.choices(string.ascii_letters + string.digits, k=30)) 
+		token = ''.join(random.choices(string.ascii_letters + string.digits, k=30)) 
 		auth_dto = AuthTokenDto(
-			token=contents['token'],
+			token=token,
 			auth_id=user_dto.user_id)
 		session.add(auth_dto)
 		session.commit()
@@ -40,33 +40,22 @@ class AuthService():
 		return {
 			'code': 200,
 			'result': 0,
-			'contents': contents,
+			'contents': { 'token': token },
 		}
 	
 	@classmethod
-	def get_token_from_header(cls, authorization: HTTPAuthorizationCredentials = Depends(HTTPBearer(auto_error=False))):
+	def get_user_id_from_header(cls, authorization: HTTPAuthorizationCredentials = Depends(HTTPBearer(auto_error=False))):
 		if authorization is None:
 			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, headers={"WWW-Authenticate": "Bearer"})
 
 		return cls.__get_user_id_by_token(authorization.credentials)
 
 	def __get_user_id_by_token(token):
-		get_user_id_sql = textwrap.dedent('''
-			select
-				user_id
-			from
-				user_token
-			where
-				token = '{0}'
-		''').format(token).strip()
+		session = get_session()
+		row = session.query(AuthTokenDto).filter(AuthTokenDto.token==token).first()
 
-		with pg.connect(db.get_connect_info()) as conn:
-			with conn.cursor() as cur:
-				cur.execute(get_user_id_sql)
-				rows = cur.fetchone()
-
-		if rows is None:
+		if row is None:
 			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, headers={"WWW-Authenticate": "Bearer"})
 
-		return rows[0]
+		return row.auth_id
 

@@ -1,4 +1,4 @@
-from app.types.problem import ProblemInfo, UserInput 
+from app.types.problem import ProblemInfo, CodeInfo 
 from app.services.domain.exe_service import ExeService
 
 class Problem():
@@ -59,6 +59,7 @@ class Problem():
             'format':self.get_problem_format(),
             'title':self.get_title(),
             'question':self.get_question(),
+            'created_at': format(self.get_created_at(), '%Y年%m月%d日')
         }
 
 
@@ -84,8 +85,8 @@ class CodingProblem(Problem):
     def get_coding_kubun(self):
         return self.coding.get_coding_kubun()
 
-    def execute(self, user_input: UserInput):
-        return self.coding.execute(user_input)
+    def execute(self, code_info: CodeInfo):
+        return self.coding.execute(code_info)
 
     def export(self):
         return {
@@ -130,8 +131,8 @@ class FrontEndCoding():
         return self.css
 
 class BackEndCoding():
-    PHP = 'php'
-    PYTHON = 'python'
+    PHP = 'php_code'
+    PYTHON = 'python_code'
 
     def __init__(self):
         self.php_code = ''
@@ -152,11 +153,11 @@ class BackEndCoding():
     def get_python_code(self):
         return self.python_code
 
-    def execute(self, user_input):
-        if user_input.lang == self.PHP:
-            result = ExeService.execute_php_code(user_input.code)
+    def execute(self, code_info:CodeInfo):
+        if code_info.language == self.PHP:
+            result = ExeService.execute_php_code(code_info.code)
         else:
-            result = ExeService.execute_python_code(user_input.code)
+            result = ExeService.execute_python_code(code_info.code)
 
         return result
 
@@ -164,9 +165,8 @@ class NullCoding():
     def get_coding_kubun(self):
         return CodingProblem.NULLCODING
 
-    def execute(self, user_input):
-        return None
-    
+    def execute(self, coding_info):
+        pass
 
 class DescriptionProblem(Problem):
     def __init__(self, problem_cd):

@@ -9,7 +9,7 @@ class ExeService():
     def execute_php_code(cls, code):
         return ExecutionResult(
             result=cls.SUCCESS,
-            output='',
+            output='php',
             error=''
         )
 
@@ -17,6 +17,6 @@ class ExeService():
     def execute_python_code(cls, code):
         return ExecutionResult(
             result=cls.SUCCESS,
-            output='',
+            output='python',
             error=''
         )

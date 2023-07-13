@@ -35,6 +35,18 @@ class ProblemInfo(BaseModel):
 	description_problem: Optional[DescriptionProblemInfo] = None
 	select_problem: Optional[SelectProblemInfo] = None
 
-class UserInput(BaseModel):
-	lang: str
+class SubmitInfo(BaseModel):
+	problem_cd: str
+	front_end_problem_info: Optional[FrontEndProblemInfo] = None
+	back_end_problem_info: Optional[BackEndProblemInfo] = None
+	description_problem_info: Optional[DescriptionProblemInfo] = None
+	select_problem_info: Optional[SelectProblemInfo] = None
+
+class CodeInfo(BaseModel):
+	language: str
 	code: str
+
+class ExecutionInfo(BaseModel):
+	problem_cd:str
+	language:str
+	code:str

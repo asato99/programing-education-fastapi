@@ -111,7 +111,35 @@ class SubmissionDto(Base):
     id = Column(Integer, Sequence('submission_id_seq'), primary_key=True)
     user_id = Column(Integer)
     problem_cd = Column(String(30))
-    submission = Column(Text())
+    comment = Column(Text())
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+    )
+
+class CodingSubmissionDto(Base):
+    __tablename__ = "coding_submission"
+    submission_id = Column(Integer, primary_key=True)
+    lang = Column(String(10), primary_key=True)
+    code = Column(Text())
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+    )
+
+class DescriptionSubmissionDto(Base):
+    __tablename__ = "description_submission"
+    submission_id = Column(Integer, primary_key=True)
+    answer = Column(Text())
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+    )
+
+class SelectSubmissionDto(Base):
+    __tablename__ = "select_submission"
+    submission_id = Column(Integer, primary_key=True)
+    answer = Column(Integer)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False

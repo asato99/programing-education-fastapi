@@ -76,6 +76,7 @@ class UserProblemRepository():
 			problem=problem,
 			submit_status=user_problem_dto.status)
 		user_problem.set_memo(user_problem_dto.memo)
+		user_problem.set_created_at(user_problem_dto.created_at)
 
 		return user_problem
 		
@@ -91,6 +92,7 @@ class UserProblemRepository():
 				problem=problem,
 				submit_status=user_problem_dto.status)
 			user_problem.set_memo(user_problem_dto.memo)
+			user_problem.set_created_at(user_problem_dto.created_at)
 			user_problems.add_user_problem(user_problem)
 
 		return user_problems
