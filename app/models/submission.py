@@ -1,3 +1,5 @@
+from app.types.submission import CodingSubmissionType
+
 class Submission():
 	UNSUBMITTED = 1
 	SUBMITTED = 2
@@ -32,3 +34,21 @@ class Submission():
 
 	def get_adding(self):
 		return self.adding
+
+	def get_submissions(self):
+		pass
+
+class CodingSubmission(Submission):
+	def get_submissions(self):
+		pass
+	
+	def add_coding_submission(self, submission: CodingSubmissionType):
+		super().add_submission(submission)
+
+class DescriptionSubmission(Submission):
+	def get_submissions(self):
+		pass
+
+class SelectSubmission(Submission):
+	def get_submissions(self):
+		pass

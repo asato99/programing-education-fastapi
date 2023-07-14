@@ -1,6 +1,7 @@
 from app.db.tables import UserProblemDto, SubmissionDto, MessageDto, LogDto
 from app.repositories.problem_repository import ProblemRepository
 from app.factories.user_problem_factory import UserProblemFactory
+from app.models.problem import Problem
 from app.models.user_problem import UserProblem, UserProblems
 from app.models.messages import Messages
 
@@ -30,8 +31,18 @@ class UserProblemRepository():
 			submission_dto = SubmissionDto(
 				user_id=user_problem.get_user_id(),
 				problem_cd=user_problem.get_problem_cd(),
-				submission=submission)
+				submission=submission.comment)
 			self.session.add(submission_dto)
+			self.session.refresh()
+
+			if user_problem.get_problem_format() == Problem.CODING_FORMAT:
+				for code in submission.code_list:
+					coding_submission_dto = CodingSubmissionDto(
+						submission_id=submission_dto.id,
+						language=code.language,
+						code=code.code)
+					self.session.add(coding_submission_dto)
+
 
 		for message in user_problem.get_messages_adding():
 			message_dto = MessageDto(

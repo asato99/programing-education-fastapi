@@ -19,6 +19,9 @@ class UserProblem():
 	def get_type(self):
 		return self.NORMAL
 
+	def get_problem_format(self):
+		return self.problem.get_problem_format()
+
 	def get_user_id(self):
 		return self.user_id
 
@@ -57,7 +60,7 @@ class UserProblem():
 			'problem_cd': self.problem.get_problem_cd(),
 			'title': self.problem.get_title(),
 			'status': self.submission.get_status(),
-			'format': self.problem.get_problem_format(),
+			'format': self.get_problem_format(),
             'created_at': format(self.get_created_at(), '%Y年%m月%d日')
 		}
 

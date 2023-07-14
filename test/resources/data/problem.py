@@ -1,7 +1,7 @@
 import sys
 sys.path.append("../../../")
 from app.types.problem import ProblemInfo, CodingProblemInfo, FrontEndProblemInfo
-from app.types.problem import BackEndProblemInfo, DescriptionProblemInfo, SelectProblemInfo, SelectProblemOption, UserInput 
+from app.types.problem import BackEndProblemInfo, DescriptionProblemInfo, SelectProblemInfo, SelectProblemOption, CodeInfo
 
 class ProblemData():
     front_end_coding = ProblemInfo(
@@ -55,7 +55,7 @@ class ProblemData():
         question='test exception question',
         format=0)
 
-    php_input = UserInput(
-        lang="php",
+    php_input = CodeInfo(
+        language="php",
         code=""
     )
