@@ -31,9 +31,9 @@ class UserProblemRepository():
 			submission_dto = SubmissionDto(
 				user_id=user_problem.get_user_id(),
 				problem_cd=user_problem.get_problem_cd(),
-				submission=submission.comment)
+				comment=submission.comment)
 			self.session.add(submission_dto)
-			self.session.refresh()
+			self.session.flush()
 
 			if user_problem.get_problem_format() == Problem.CODING_FORMAT:
 				for code in submission.code_list:

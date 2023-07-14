@@ -5,11 +5,13 @@ import sys
 import sqlalchemy
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.repositories.user_problem_repository import UserProblemRepository
-from app.models.problem import Problem
+from app.models.problem import Problem, CodingProblem
 from app.models.user_problem import UserProblem
 from app.models.logs import Logs
 from app.models.submission import Submission
 from app.models.messages import Messages
+from app.types.problem import CodeInfo
+from app.types.submission import CodingSubmissionType
 from app.db.tables import ProblemDto, DescriptionProblemDto, UserProblemDto, LogDto, SubmissionDto, MessageDto
 from resources.db import setting
 
@@ -89,8 +91,8 @@ class TestUserProblemRepositorySave(unittest.TestCase):
         actual = user_problem_dto.status
         self.assertEqual(expected, actual)
 
-    def test_add_submission(self):
-        problem = Problem(self.problem_cd)
+    def test_add_coding_submission(self):
+        problem = CodingProblem(self.problem_cd)
         user_problem = UserProblem(
             user_id=self.user_id,
             problem=problem,
@@ -101,7 +103,21 @@ class TestUserProblemRepositorySave(unittest.TestCase):
             messages=Messages(
                 user_id=self.user_id,
                 problem_cd=problem.get_problem_cd()))
-        submission = 'submit test'
+        code_list = [
+            CodeInfo(
+                language='html',
+                code='test code'),
+            CodeInfo(
+                language='javascript',
+                code='test code'),
+            CodeInfo(
+                language='css',
+                code='test code')
+        ]
+        submission = CodingSubmissionType(
+            comment='test submit',
+            code_list=code_list)
+
         user_problem.submit(submission)
 
         self.user_problem_repository.save(user_problem)
