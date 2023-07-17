@@ -37,6 +37,7 @@ class ProblemInfo(BaseModel):
 
 class SubmitInfo(BaseModel):
 	problem_cd: str
+	comment: str
 	front_end_problem_info: Optional[FrontEndProblemInfo] = None
 	back_end_problem_info: Optional[BackEndProblemInfo] = None
 	description_problem_info: Optional[DescriptionProblemInfo] = None

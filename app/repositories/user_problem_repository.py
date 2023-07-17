@@ -1,7 +1,7 @@
-from app.db.tables import UserProblemDto, SubmissionDto, MessageDto, LogDto
+from app.db.tables import UserProblemDto, SubmissionDto, CodingSubmissionDto, DescriptionSubmissionDto, SelectSubmissionDto, MessageDto, LogDto, InputLogDto, OutputLogDto
 from app.repositories.problem_repository import ProblemRepository
 from app.factories.user_problem_factory import UserProblemFactory
-from app.models.problem import Problem
+from app.models.problem import Problem, CodingProblem
 from app.models.user_problem import UserProblem, UserProblems
 from app.models.messages import Messages
 
@@ -36,13 +36,24 @@ class UserProblemRepository():
 			self.session.flush()
 
 			if user_problem.get_problem_format() == Problem.CODING_FORMAT:
-				for code in submission.code_list:
+				for code in submission.coding.code_list:
 					coding_submission_dto = CodingSubmissionDto(
 						submission_id=submission_dto.id,
 						language=code.language,
 						code=code.code)
 					self.session.add(coding_submission_dto)
 
+			elif user_problem.get_problem_format() == Problem.DESCRIPTION_FORMAT:
+				description_submission_dto = DescriptionSubmissionDto(
+					submission_id=submission_dto.id,
+					answer=submission.description.answer)
+				self.session.add(description_submission_dto)
+
+			elif user_problem.get_problem_format() == Problem.SELECT_FORMAT:
+				select_submission_dto = SelectSubmissionDto(
+					submission_id=submission_dto.id,
+					answer=submission.select.answer)
+				self.session.add(select_submission_dto)
 
 		for message in user_problem.get_messages_adding():
 			message_dto = MessageDto(
@@ -53,13 +64,31 @@ class UserProblemRepository():
 			self.session.add(message_dto)
 
 		if user_problem.get_type() == UserProblem.CODING:
-			for log in user_problem.get_log_adding():
+			for log in user_problem.get_logs_adding():
 				log_dto = LogDto(
 					user_id=user_problem.get_user_id(),
-					problem_cd=user_problem.get_problem_cd(),
-					lang=log.lang,
-					log=log.code)
+					problem_cd=user_problem.get_problem_cd())
 				self.session.add(log_dto)
+				self.session.flush()
+
+				if log.kubun == CodingProblem.FRONTEND:
+					input_log_dto = InputLogDto(
+						log_id=log_dto.id,
+						language=log.code_info.language,
+						code=log.code_info.code)
+					self.session.add(input_log_dto)
+				elif log.kubun == CodingProblem.BACKEND:
+					input_log_dto = InputLogDto(
+						log_id=log_dto.id,
+						language=log.code_info.language,
+						code=log.code_info.code)
+					self.session.add(input_log_dto)
+
+					output_log_dto = OutputLogDto(
+						log_id=log_dto.id,
+						output=log.exe_result.output,
+						result=log.exe_result.result)
+					self.session.add(output_log_dto)
 
 		self.session.commit()
 

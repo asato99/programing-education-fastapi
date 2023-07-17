@@ -42,3 +42,20 @@ def get_user_problem_list(user_id:str):
     headers = user_problems.export_headers()
     return headers
 
+@router.get("/submissions")
+def get_submissions(param: UserProblemInfo = Depends()):
+    user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
+        user_id=param.user_id,
+        problem_cd=param.problem_cd)
+    submissions = user_problem.get_submissions(param, setting.get_session())
+    return {
+        'status': user_problem.get_submission_status(),
+        'submissions': submissions
+    }
+
+@router.get("/logs")
+def get_logs(param: UserProblemInfo = Depends()):
+    user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
+        user_id=param.user_id,
+        problem_cd=param.problem_cd)
+    logs = user_problem.get_logs(param, setting.get_session())

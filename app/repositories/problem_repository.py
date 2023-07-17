@@ -147,7 +147,7 @@ class ProblemRepository():
                 self.session.add(select_option_dto)
 
             select_answer_dto = self.session.query(SelectProblemAnswerDto).filter(SelectProblemAnswerDto.problem_cd==problem.get_problem_cd()).first()
-            select_answer_dto.answer = select_answer_dto.get_answer()
+            select_answer_dto.answer = problem.get_answer()
 
         self.session.commit()
 

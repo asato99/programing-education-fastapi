@@ -1,3 +1,4 @@
+from app.types.logs import BackEndLogInfo
 class UserProblem():
 	NORMAL = 1
 	CODING = 2
@@ -40,6 +41,9 @@ class UserProblem():
 	def get_submit_adding(self):
 		return self.submission.get_adding()
 
+	def get_submissions(self, param, session):
+		return self.submission.get_submissions(param, session)
+
 	def submit(self, submission):
 		self.submission.add_submission(submission)
 
@@ -61,7 +65,7 @@ class UserProblem():
 			'title': self.problem.get_title(),
 			'status': self.submission.get_status(),
 			'format': self.get_problem_format(),
-            'created_at': format(self.get_created_at(), '%Y年%m月%d日')
+			'created_at': format(self.get_created_at(), '%Y年%m月%d日')
 		}
 
 
@@ -76,9 +80,14 @@ class CodingUserProblem(UserProblem):
 	def get_logs_adding(self):
 		return self.logs.get_adding()
 
+	def get_logs(self, param, session):
+		return self.logs.get_logs(param, session)
+
 	def execute(self, code_info):
 		result = self.problem.execute(code_info)
-		self.logs.add_log(result)
+		self.logs.add_log(BackEndLogInfo(
+			code_info=code_info,
+			exe_result=result))
 		return result
 
 class UserProblems():

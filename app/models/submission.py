@@ -1,4 +1,4 @@
-from app.types.submission import CodingSubmissionType
+from app.services.application.query.submission_query import SubmissionQuery
 
 class Submission():
 	UNSUBMITTED = 1
@@ -28,6 +28,8 @@ class Submission():
 	def add_submission(self, submission):
 		self.status = self.SUBMITTED
 		self.adding.append(submission)
+		print('###################### submision')
+		print(submission)
 
 	def reset_adding(self):
 		self.adding = []
@@ -35,20 +37,24 @@ class Submission():
 	def get_adding(self):
 		return self.adding
 
-	def get_submissions(self):
+	def get_submissions(self, param, session):
+		return SubmissionQuery.get_submissions(param, session)
+
+	def __format_submission(self, param):
 		pass
 
 class CodingSubmission(Submission):
-	def get_submissions(self):
+	def get_submission(self):
 		pass
-	
-	def add_coding_submission(self, submission: CodingSubmissionType):
-		super().add_submission(submission)
+
+	def __format_submission(self, param):
+		pass
+		
 
 class DescriptionSubmission(Submission):
-	def get_submissions(self):
+	def get_submission(self):
 		pass
 
 class SelectSubmission(Submission):
-	def get_submissions(self):
+	def get_submission(self):
 		pass

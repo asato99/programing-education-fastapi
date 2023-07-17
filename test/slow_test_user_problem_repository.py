@@ -11,8 +11,8 @@ from app.models.logs import Logs
 from app.models.submission import Submission
 from app.models.messages import Messages
 from app.types.problem import CodeInfo
-from app.types.submission import CodingSubmissionType
-from app.db.tables import ProblemDto, DescriptionProblemDto, UserProblemDto, LogDto, SubmissionDto, MessageDto
+from app.types.submission import SubmissionInfo, CodingSubmission
+from app.db.tables import ProblemDto, DescriptionProblemDto, UserProblemDto, LogDto, SubmissionDto, CodingSubmissionDto, MessageDto
 from resources.db import setting
 
 class TestUserProblemRepositoryRegist(unittest.TestCase):
@@ -106,17 +106,19 @@ class TestUserProblemRepositorySave(unittest.TestCase):
         code_list = [
             CodeInfo(
                 language='html',
-                code='test code'),
+                code='test html'),
             CodeInfo(
                 language='javascript',
-                code='test code'),
+                code='test js'),
             CodeInfo(
                 language='css',
-                code='test code')
+                code='test css')
         ]
-        submission = CodingSubmissionType(
+        submission = SubmissionInfo(
+            problem_cd=problem.get_problem_cd(),
             comment='test submit',
-            code_list=code_list)
+            coding=CodingSubmission(
+                code_list=code_list))
 
         user_problem.submit(submission)
 
@@ -125,9 +127,12 @@ class TestUserProblemRepositorySave(unittest.TestCase):
         submission_dto = self.session.query(SubmissionDto
             ).filter(SubmissionDto.user_id==self.user_id
             ).filter(SubmissionDto.problem_cd==self.problem_cd).first()
+        coding_submission_dto = self.session.query(CodingSubmissionDto
+            ).filter(CodingSubmissionDto.submission_id==submission_dto.id
+            ).filter(CodingSubmissionDto.language=='javascript').first()
 
-        expected = submission
-        actual = submission_dto.submission
+        expected = 'test js'
+        actual = coding_submission_dto.code
         self.assertEqual(expected, actual)
 
 class TestUserProblemRepositoryFind(unittest.TestCase):

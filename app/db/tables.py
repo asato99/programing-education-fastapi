@@ -26,7 +26,7 @@ class ProblemDto(Base):
 class CodingProblemDto(Base):
     __tablename__ = "coding_problem"
     problem_cd = Column(String(30), primary_key=True)
-    language = Column(String(10), primary_key=True)
+    language = Column(String(15), primary_key=True)
     code = Column(Text())
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(
@@ -99,12 +99,27 @@ class LogDto(Base):
     id = Column(Integer, Sequence('log_id_seq'), primary_key=True)
     user_id = Column(Integer)
     problem_cd = Column(String(30))
-    lang = Column(String(10))
-    log = Column(Text())
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
+
+class InputLogDto(Base):
+    __tablename__ = "input_log"
+    log_id = Column(Integer, primary_key=True)
+    language = Column(String(15))
+    code = Column(Text())
+
+class OutputLogDto(Base):
+    __tablename__ = "output_log"
+    log_id = Column(Integer, primary_key=True)
+    result = Column(Integer)
+    output = Column(Text())
+
+class ErrorLogDto(Base):
+    __tablename__ = "error_log"
+    log_id = Column(Integer, primary_key=True)
+    error = Column(Text())
 
 class SubmissionDto(Base):
     __tablename__ = "submission"
@@ -120,7 +135,7 @@ class SubmissionDto(Base):
 class CodingSubmissionDto(Base):
     __tablename__ = "coding_submission"
     submission_id = Column(Integer, primary_key=True)
-    lang = Column(String(10), primary_key=True)
+    language = Column(String(15), primary_key=True)
     code = Column(Text())
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(
