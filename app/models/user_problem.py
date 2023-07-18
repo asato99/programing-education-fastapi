@@ -1,4 +1,4 @@
-from app.types.logs import BackEndLogInfo
+from app.types.logs import LogInfo, BackEndLogInfo
 class UserProblem():
 	NORMAL = 1
 	CODING = 2
@@ -83,9 +83,13 @@ class CodingUserProblem(UserProblem):
 	def get_logs(self, param, session):
 		return self.logs.get_logs(param, session)
 
+	def add_log(self, log_info: LogInfo):
+		self.logs.add_log(log_info)
+
 	def execute(self, code_info):
 		result = self.problem.execute(code_info)
 		self.logs.add_log(BackEndLogInfo(
+			problem_cd=self.problem.get_problem_cd(),
 			code_info=code_info,
 			exe_result=result))
 		return result

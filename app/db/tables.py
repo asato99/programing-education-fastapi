@@ -107,7 +107,7 @@ class LogDto(Base):
 class InputLogDto(Base):
     __tablename__ = "input_log"
     log_id = Column(Integer, primary_key=True)
-    language = Column(String(15))
+    language = Column(String(15), primary_key=True)
     code = Column(Text())
 
 class OutputLogDto(Base):

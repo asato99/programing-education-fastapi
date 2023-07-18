@@ -131,27 +131,27 @@ class FrontEndCoding():
         return self.css
 
 class BackEndCoding():
-    PHP = 'php_code'
-    PYTHON = 'python_code'
+    PHP = 'php'
+    PYTHON = 'python'
 
     def __init__(self):
-        self.php_code = ''
-        self.python_code = ''
+        self.php = ''
+        self.python = ''
 
     def get_coding_kubun(self):
         return CodingProblem.BACKEND
 
     def set_php_code(self, code):
-        self.php_code = code
+        self.php = code
 
     def get_php_code(self):
-        return self.php_code
+        return self.php
 
     def set_python_code(self, code):
-        self.python_code = code
+        self.python = code
 
     def get_python_code(self):
-        return self.python_code
+        return self.python
 
     def execute(self, code_info:CodeInfo):
         if code_info.language == self.PHP:

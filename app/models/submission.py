@@ -28,8 +28,6 @@ class Submission():
 	def add_submission(self, submission):
 		self.status = self.SUBMITTED
 		self.adding.append(submission)
-		print('###################### submision')
-		print(submission)
 
 	def reset_adding(self):
 		self.adding = []
@@ -40,16 +38,13 @@ class Submission():
 	def get_submissions(self, param, session):
 		return SubmissionQuery.get_submissions(param, session)
 
-	def __format_submission(self, param):
-		pass
+class FrontEndSubmission(Submission):
+	def get_submissions(self, param, session):
+		return SubmissionQuery.get_front_end_submissions(param, session)
 
-class CodingSubmission(Submission):
-	def get_submission(self):
-		pass
-
-	def __format_submission(self, param):
-		pass
-		
+class BackEndSubmission(Submission):
+	def get_submissions(self, param, session):
+		return SubmissionQuery.get_front_end_submissions(param, session)
 
 class DescriptionSubmission(Submission):
 	def get_submission(self):

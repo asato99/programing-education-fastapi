@@ -72,11 +72,13 @@ class UserProblemRepository():
 				self.session.flush()
 
 				if log.kubun == CodingProblem.FRONTEND:
-					input_log_dto = InputLogDto(
-						log_id=log_dto.id,
-						language=log.code_info.language,
-						code=log.code_info.code)
-					self.session.add(input_log_dto)
+					for code_info in log.code_list:
+						input_log_dto = InputLogDto(
+							log_id=log_dto.id,
+							language=code_info.language,
+							code=code_info.code)
+						self.session.add(input_log_dto)
+
 				elif log.kubun == CodingProblem.BACKEND:
 					input_log_dto = InputLogDto(
 						log_id=log_dto.id,

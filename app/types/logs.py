@@ -4,7 +4,7 @@ from app.types.problem import CodeInfo
 from app.types.exe_service import ExecutionResult
 
 class LogInfo(BaseModel):
-	pass
+	problem_cd: str
 
 class FrontEndLogInfo(LogInfo):
 	kubun = 1

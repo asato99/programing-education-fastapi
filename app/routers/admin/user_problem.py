@@ -58,4 +58,10 @@ def get_logs(param: UserProblemInfo = Depends()):
     user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
         user_id=param.user_id,
         problem_cd=param.problem_cd)
+    kubun = user_problem.export_problem()['kubun']
     logs = user_problem.get_logs(param, setting.get_session())
+    return {
+        'kubun':kubun,
+        'logs':logs,
+    }
+
