@@ -26,6 +26,7 @@ class UserProblemRepository():
 			UserProblemDto.user_id == user_problem.get_user_id()).filter(
 				UserProblemDto.problem_cd == user_problem.get_problem_cd()).one()
 		user_problem_dto.status = user_problem.get_submission_status()
+		user_problem_dto.memo = user_problem.get_memo()
 		
 		for submission in user_problem.get_submit_adding():
 			submission_dto = SubmissionDto(

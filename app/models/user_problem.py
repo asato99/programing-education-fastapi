@@ -63,7 +63,9 @@ class UserProblem():
 		return self.messages.get_messages(session)
 
 	def export_problem(self):
-		return self.problem.export()
+		user_problem = self.problem.export()
+		user_problem['memo'] = self.get_memo()
+		return user_problem
 
 	def export_header(self):
 		return {

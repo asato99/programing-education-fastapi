@@ -5,6 +5,7 @@ from app.services.application.auth.auth_service import AuthService
 from app.repositories.user_problem_repository import UserProblemRepository
 from app.types.problem import ExecutionInfo, CodeInfo
 from app.types.submission import SubmissionInfo
+from app.types.memo import MemoInfo
 from app.types.logs import FrontEndLogInfo
 from app.db import setting
 
@@ -40,6 +41,13 @@ def execute(param:ExecutionInfo, user_id: int = Depends(AuthService.get_user_id_
     user_problem_repository.save(user_problem)
     return result
 
+@router.get("/submissions/{problem_cd}")
+def get_submissions(problem_cd:str, user_id: int = Depends(AuthService.get_user_id_from_header)):
+    user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
+        user_id=user_id,
+        problem_cd=problem_cd)
+    return user_problem.get_submissions(setting.get_session())
+
 @router.post("/submit")
 def submit(param:SubmissionInfo, user_id: int = Depends(AuthService.get_user_id_from_header)):
     user_problem = user_problem_repository.find_by_user_id_and_problem_cd(user_id, param.problem_cd)
@@ -58,5 +66,12 @@ def get_messages(problem_cd:str, user_id: int = Depends(AuthService.get_user_id_
 def add_log(param:FrontEndLogInfo, user_id: int = Depends(AuthService.get_user_id_from_header)):
     user_problem = user_problem_repository.find_by_user_id_and_problem_cd(user_id, param.problem_cd)
     user_problem.add_log(param)
+    user_problem_repository.save(user_problem)
+    return
+
+@router.post("/save_memo")
+def save_memo(param:MemoInfo, user_id: int = Depends(AuthService.get_user_id_from_header)):
+    user_problem = user_problem_repository.find_by_user_id_and_problem_cd(user_id, param.problem_cd)
+    user_problem.set_memo(param.memo)
     user_problem_repository.save(user_problem)
     return
