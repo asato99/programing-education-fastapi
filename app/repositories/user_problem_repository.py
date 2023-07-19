@@ -55,12 +55,13 @@ class UserProblemRepository():
 					answer=submission.select.answer)
 				self.session.add(select_submission_dto)
 
-		for message in user_problem.get_messages_adding():
+		for message_info in user_problem.get_messages_adding():
 			message_dto = MessageDto(
 				user_id=user_problem.get_user_id(),
 				problem_cd=user_problem.get_problem_cd(),
-				message=message,
-				read=Message.UNREAD)
+				title=message_info.title,
+				message=message_info.message,
+				read=Messages.UNREAD)
 			self.session.add(message_dto)
 
 		if user_problem.get_type() == UserProblem.CODING:

@@ -5,6 +5,7 @@ from app.repositories.user_problem_repository import UserProblemRepository
 from app.repositories.problem_repository import ProblemRepository
 from app.models.submission import Submission
 from app.types.user_problem import UserProblemInfo, UserProblemRegistInfo
+from app.types.message import MessageInfo
 from app.db import setting
 
 router = APIRouter(
@@ -47,11 +48,45 @@ def get_submissions(param: UserProblemInfo = Depends()):
     user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
         user_id=param.user_id,
         problem_cd=param.problem_cd)
-    submissions = user_problem.get_submissions(param, setting.get_session())
+    submissions = user_problem.get_submissions(setting.get_session())
     return {
         'status': user_problem.get_submission_status(),
         'submissions': submissions
     }
+
+@router.post("/approve")
+def approve_submission(param: UserProblemInfo):
+    user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
+        user_id=param.user_id,
+        problem_cd=param.problem_cd)
+    user_problem.approve_submission()
+    user_problem_repository.save(user_problem)
+    return
+
+@router.post("/disapprove")
+def disapprove_submission(param: UserProblemInfo):
+    user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
+        user_id=param.user_id,
+        problem_cd=param.problem_cd)
+    user_problem.disapprove_submission()
+    user_problem_repository.save(user_problem)
+    return
+
+@router.get("/messages")
+def get_messages(param: UserProblemInfo = Depends()):
+    user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
+        user_id=param.user_id,
+        problem_cd=param.problem_cd)
+    return user_problem.get_messages(setting.get_session())
+
+@router.post("/send")
+def send_message(param: MessageInfo):
+    user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
+        user_id=param.user_id,
+        problem_cd=param.problem_cd)
+    user_problem.send_message(param.message_info)
+    user_problem_repository.save(user_problem)
+    return
 
 @router.get("/logs")
 def get_logs(param: UserProblemInfo = Depends()):

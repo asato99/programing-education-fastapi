@@ -24,7 +24,7 @@ class UserProblemFactory():
 				submission=submission,
 				logs=logs)
 
-		elif problem.get_problem_format() == Problem.CODING_FORMAT:
+		elif problem.get_problem_format() == Problem.DESCRIPTION_FORMAT:
 			user_problem = UserProblem(
 				user_id=user_id,
 				problem=problem,

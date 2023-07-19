@@ -1,3 +1,5 @@
+from app.services.application.query.messages_query import MessagesQuery
+from app.types.user_problem import UserProblemInfo
 class Messages():
 	UNREAD = 0
 	READ = 1
@@ -16,3 +18,9 @@ class Messages():
 
 	def get_adding(self):
 		return self.adding
+
+	def get_messages(self, session):
+		user_problem_info = UserProblemInfo(
+			user_id=self.user_id,
+			problem_cd=self.problem_cd)
+		return MessagesQuery.get_messages(user_problem_info, session)

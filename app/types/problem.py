@@ -11,6 +11,9 @@ class BackEndProblemInfo(BaseModel):
 	python_code: str
 
 class CodingProblemInfo(BaseModel):
+	FRONTEND:int = 1
+	BACKEND:int = 2
+
 	kubun: int
 	front_end_problem: Optional[FrontEndProblemInfo] = None
 	back_end_problem: Optional[BackEndProblemInfo] = None

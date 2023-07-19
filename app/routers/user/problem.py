@@ -6,6 +6,7 @@ from app.repositories.user_problem_repository import UserProblemRepository
 from app.types.problem import ExecutionInfo, CodeInfo
 from app.types.submission import SubmissionInfo
 from app.types.logs import FrontEndLogInfo
+from app.db import setting
 
 router = APIRouter(
     prefix="/user/problem",
@@ -45,6 +46,13 @@ def submit(param:SubmissionInfo, user_id: int = Depends(AuthService.get_user_id_
     user_problem.submit(param)
     user_problem_repository.save(user_problem)
     return
+
+@router.get("/messages/{problem_cd}")
+def get_messages(problem_cd:str, user_id: int = Depends(AuthService.get_user_id_from_header)):
+    user_problem = user_problem_repository.find_by_user_id_and_problem_cd(
+        user_id=user_id,
+        problem_cd=problem_cd)
+    return user_problem.get_messages(setting.get_session())
 
 @router.post("/add_log")
 def add_log(param:FrontEndLogInfo, user_id: int = Depends(AuthService.get_user_id_from_header)):

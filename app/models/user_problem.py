@@ -41,8 +41,8 @@ class UserProblem():
 	def get_submit_adding(self):
 		return self.submission.get_adding()
 
-	def get_submissions(self, param, session):
-		return self.submission.get_submissions(param, session)
+	def get_submissions(self, session):
+		return self.submission.get_submissions(session)
 
 	def submit(self, submission):
 		self.submission.add_submission(submission)
@@ -55,6 +55,12 @@ class UserProblem():
 
 	def get_messages_adding(self):
 		return self.messages.get_adding()
+
+	def send_message(self, message_info):
+		self.messages.add_message(message_info)
+
+	def get_messages(self, session):
+		return self.messages.get_messages(session)
 
 	def export_problem(self):
 		return self.problem.export()

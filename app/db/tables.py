@@ -165,6 +165,7 @@ class MessageDto(Base):
     id = Column(Integer, Sequence('message_id_seq'), primary_key=True)
     user_id = Column(Integer)
     problem_cd = Column(String(30))
+    title = Column(Text())
     message = Column(Text())
     read = Integer
     created_at = Column(DateTime, default=datetime.now(), nullable=False)

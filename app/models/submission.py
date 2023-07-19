@@ -1,4 +1,5 @@
 from app.services.application.query.submission_query import SubmissionQuery
+from app.types.user_problem import UserProblemInfo
 
 class Submission():
 	UNSUBMITTED = 1
@@ -35,21 +36,36 @@ class Submission():
 	def get_adding(self):
 		return self.adding
 
-	def get_submissions(self, param, session):
-		return SubmissionQuery.get_submissions(param, session)
+	def get_submissions(self, session):
+		user_problem_info = UserProblemInfo(
+			user_id=self.user_id,
+			problem_cd=self.problem_cd)
+		return SubmissionQuery.get_submissions(user_problem_info, session)
 
 class FrontEndSubmission(Submission):
-	def get_submissions(self, param, session):
-		return SubmissionQuery.get_front_end_submissions(param, session)
+	def get_submissions(self, session):
+		user_problem_info = UserProblemInfo(
+			user_id=self.user_id,
+			problem_cd=self.problem_cd)
+		return SubmissionQuery.get_front_end_submissions(user_problem_info, session)
 
 class BackEndSubmission(Submission):
-	def get_submissions(self, param, session):
-		return SubmissionQuery.get_front_end_submissions(param, session)
+	def get_submissions(self,session):
+		user_problem_info = UserProblemInfo(
+			user_id=self.user_id,
+			problem_cd=self.problem_cd)
+		return SubmissionQuery.get_back_end_submissions(user_problem_info, session)
 
 class DescriptionSubmission(Submission):
-	def get_submission(self):
-		pass
+	def get_submissions(self, session):
+		user_problem_info = UserProblemInfo(
+			user_id=self.user_id,
+			problem_cd=self.problem_cd)
+		return SubmissionQuery.get_description_submissions(user_problem_info, session)
 
 class SelectSubmission(Submission):
-	def get_submission(self):
-		pass
+	def get_submissions(self, session):
+		user_problem_info = UserProblemInfo(
+			user_id=self.user_id,
+			problem_cd=self.problem_cd)
+		return SubmissionQuery.get_select_submissions(user_problem_info, session)
