@@ -7,10 +7,10 @@ class LogInfo(BaseModel):
 	problem_cd: str
 
 class FrontEndLogInfo(LogInfo):
-	kubun = 1
+	kubun:int = 1
 	code_list: List[CodeInfo] = []
 
 class BackEndLogInfo(LogInfo):
-	kubun = 2
+	kubun:int = 2
 	code_info: CodeInfo
 	exe_result: ExecutionResult

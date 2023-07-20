@@ -1,6 +1,6 @@
 from app.models.user import User, Users
 from app.models.tanto import Tanto
-from app.db.tables import UserDto, TantoDto, UserProblemDto, LogDto, SubmissionDto, MessageDto
+from app.db.tables import UserDto, TantoDto, UserProblemDto, LogDto, InputLogDto, OutputLogDto, ErrorLogDto, SubmissionDto, CodingSubmissionDto, DescriptionSubmissionDto, SelectSubmissionDto, MessageDto
 
 class UserRepository():
 	def __init__(self, session):
@@ -48,6 +48,36 @@ class UserRepository():
 		self.session.query(UserDto).filter(UserDto.user_id==user.get_user_id()).delete()
 		self.session.query(TantoDto).filter(TantoDto.user_id==user.get_user_id()).delete()
 
+		self.session.query(UserProblemDto
+			).filter(UserProblemDto.user_id==user.get_user_id()).delete()
+			
+		submission_dtos = self.session.query(SubmissionDto
+			).filter(SubmissionDto.user_id==user.get_user_id()).all()
+		for submission_dto in submission_dtos:
+			self.session.query(CodingSubmissionDto
+			).filter(CodingSubmissionDto.submission_id==submission_dto.id).delete()
+			self.session.query(DescriptionSubmissionDto
+			).filter(DescriptionSubmissionDto.submission_id==submission_dto.id).delete()
+			self.session.query(SelectSubmissionDto
+			).filter(SelectSubmissionDto.submission_id==submission_dto.id).delete()
+		self.session.query(SubmissionDto
+			).filter(SubmissionDto.user_id==user.get_user_id()).delete()
+
+		log_dtos = self.session.query(LogDto
+			).filter(LogDto.user_id==user.get_user_id()).all()
+		for log_dto in log_dtos:
+			self.session.query(InputLogDto
+			).filter(InputLogDto.log_id==log_dto.id).delete()
+			self.session.query(OutputLogDto
+			).filter(OutputLogDto.log_id==log_dto.id).delete()
+			self.session.query(ErrorLogDto
+			).filter(ErrorLogDto.log_id==log_dto.id).delete()
+		self.session.query(LogDto
+			).filter(LogDto.user_id==user.get_user_id()).delete()
+
+		self.session.query(MessageDto
+			).filter(MessageDto.user_id==user.get_user_id()).delete()
+
 		self.session.commit()
 
 	def find_by_id(self, user_id):
@@ -79,6 +109,7 @@ class UserRepository():
 		user.set_mail(dto.mail) 
 		user.set_password(dto.password) 
 		user.set_created_at(dto.created_at)
+		user.set_accessed_at(dto.accessed_at)
 
 		user.reset_tantos()
 		tanto_dtos = self.session.query(TantoDto).filter(TantoDto.user_id==dto.user_id).all()

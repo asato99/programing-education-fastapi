@@ -43,3 +43,8 @@ def get_problem_list():
     problems = problem_repository.find_all()
     problem_headers = problems.get_problem_headers()
     return problem_headers
+
+@router.get("/codes/{problem_cd}")
+def get_problem_info(problem_cd: str):
+    problem = problem_repository.find_by_problem_cd(problem_cd)
+    return problem.export()['codes']

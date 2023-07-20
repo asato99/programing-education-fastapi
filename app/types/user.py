@@ -9,3 +9,6 @@ class UserInfo(BaseModel):
     password:Optional[str] = None
     mail:Optional[str] = ''
     tantos:Optional[List[TantoInfo]] = []
+
+class UserId(BaseModel):
+    user_id: int

@@ -11,6 +11,7 @@ class User():
 		self.mail = ''
 		self.tantos = []
 		self.created_at = ''
+		self.accessed_at = ''
 
 	def set_admin_id(self, admin_id):
 		self.admin_id = admin_id
@@ -29,6 +30,9 @@ class User():
 
 	def set_created_at(self, created_at):
 		self.created_at = created_at
+
+	def set_accessed_at(self, accessed_at):
+		self.accessed_at = accessed_at
 
 	def set_password(self, password):
 		self.password = password
@@ -50,6 +54,9 @@ class User():
 
 	def get_created_at(self):
 		return self.created_at
+
+	def get_accessed_at(self):
+		return self.accessed_at
 
 	def get_password(self):
 		return self.password
@@ -73,7 +80,7 @@ class User():
 			'user_cd': self.get_cd(),
 			'user_name': self.get_name(),
             'created_at': format(self.get_created_at(), '%Y年%m月%d日'),
-            'accessed_at': format(self.get_created_at(), '%Y/%m/%d %H:%M'),
+            'accessed_at': format(self.get_accessed_at(), '%Y/%m/%d/ %H:%M'),
 		}
 
 class Users():

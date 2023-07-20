@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from app.models.user import User
 from app.repositories.user_repository import UserRepository
 from app.services.domain.user_service import UserService
-from app.types.user import UserInfo
+from app.types.user import UserInfo, UserId
 from app.db import setting
 
 router = APIRouter(
@@ -30,6 +30,12 @@ def save(param: UserInfo):
     UserService.set_info(user, param)
 
     user_repository.save(user)
+    return
+
+@router.post('/delete')
+def delete(param:UserId):
+    user = user_repository.find_by_id(param.user_id)
+    user_repository.delete(user)
     return
 
 @router.get('/find')

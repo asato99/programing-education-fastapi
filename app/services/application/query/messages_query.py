@@ -1,5 +1,5 @@
 from app.db.tables import MessageDto
-from sqlalchemy import and_
+from sqlalchemy import and_, desc
 from sqlalchemy.sql import expression
 from sqlalchemy.orm import aliased
 from fastapi.encoders import jsonable_encoder
@@ -12,7 +12,7 @@ class MessagesQuery():
 			MessageDto.message,
 			MessageDto.title,
 			).filter(MessageDto.problem_cd==param.problem_cd
-			).filter(MessageDto.user_id==param.user_id).all()
+			).filter(MessageDto.user_id==param.user_id).order_by(desc(MessageDto.id)).all()
 
 		return cls.__format_rows(messages)
 

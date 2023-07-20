@@ -1,6 +1,6 @@
 from app.db.tables import SubmissionDto, CodingSubmissionDto, DescriptionSubmissionDto, SelectSubmissionDto
 from app.models.problem import CodingProblem
-from sqlalchemy import and_
+from sqlalchemy import and_, desc
 from sqlalchemy.sql import expression
 from sqlalchemy.orm import aliased
 from fastapi.encoders import jsonable_encoder
@@ -12,7 +12,7 @@ class SubmissionQuery():
 			SubmissionDto.created_at,
 			SubmissionDto.comment
 			).filter(SubmissionDto.problem_cd==param.problem_cd
-			).filter(SubmissionDto.user_id==param.user_id).all()
+			).filter(SubmissionDto.user_id==param.user_id).order_by(desc(SubmissionDto.id)).all()
 
 		return cls.__format_rows(submissions)
 
@@ -32,7 +32,7 @@ class SubmissionQuery():
 			).outerjoin(js, and_(SubmissionDto.id==js.submission_id, js.language=='javascript')
 			).outerjoin(css, and_(SubmissionDto.id==css.submission_id, css.language=='css')
 			).filter(SubmissionDto.problem_cd==param.problem_cd
-			).filter(SubmissionDto.user_id==param.user_id).all()
+			).filter(SubmissionDto.user_id==param.user_id).order_by(desc(SubmissionDto.id)).all()
 
 		return cls.__format_rows(submissions)
 
@@ -49,7 +49,7 @@ class SubmissionQuery():
 			).outerjoin(php, and_(SubmissionDto.id==php.submission_id, php.language=='php')
 			).outerjoin(python, and_(SubmissionDto.id==python.submission_id, python.language=='python')
 			).filter(SubmissionDto.problem_cd==param.problem_cd
-			).filter(SubmissionDto.user_id==param.user_id).all()
+			).filter(SubmissionDto.user_id==param.user_id).order_by(desc(SubmissionDto.id)).all()
 
 		return cls.__format_rows(submissions)
 
@@ -61,7 +61,7 @@ class SubmissionQuery():
 			DescriptionSubmissionDto.answer,
 			).outerjoin(DescriptionSubmissionDto, SubmissionDto.id==DescriptionSubmissionDto.submission_id
 			).filter(SubmissionDto.problem_cd==param.problem_cd
-			).filter(SubmissionDto.user_id==param.user_id).all()
+			).filter(SubmissionDto.user_id==param.user_id).order_by(desc(SubmissionDto.id)).all()
 
 		return cls.__format_rows(submissions)
 
@@ -73,7 +73,7 @@ class SubmissionQuery():
 			SelectSubmissionDto.answer,
 			).outerjoin(SelectSubmissionDto, SubmissionDto.id==SelectSubmissionDto.submission_id
 			).filter(SubmissionDto.problem_cd==param.problem_cd
-			).filter(SubmissionDto.user_id==param.user_id).all()
+			).filter(SubmissionDto.user_id==param.user_id).order_by(desc(SubmissionDto.id)).all()
 
 		return cls.__format_rows(submissions)
 

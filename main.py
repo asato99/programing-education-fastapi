@@ -12,8 +12,8 @@ origins = [
     "http://localhost:8081",
     "http://localhost:8082",
     "http://127.0.0.1:8080",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173"
+    "http://user.educational-tree.net",
+    "http://admin.educational-tree.net",
 ]
 
 app.add_middleware(
@@ -31,9 +31,5 @@ app.include_router(adminProblem.router)
 app.include_router(user.router)
 app.include_router(user_problem.router)
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-if __name__ == "__main__":
- 	uvicorn.run(app, host="127.0.0.1", port=8000)
+# if __name__ == "__main__":
+#  	uvicorn.run(app, host="127.0.0.1", port=8000)

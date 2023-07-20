@@ -27,8 +27,8 @@ class ProblemService():
         problem.get_coding_type().set_css(front_end_problem_info.css)
 
     def __set_bp_info(problem, back_end_problem_info: BackEndProblemInfo):
-        problem.get_coding_type().set_php_code(back_end_problem_info.php_code)
-        problem.get_coding_type().set_python_code(back_end_problem_info.python_code)
+        problem.get_coding_type().set_php_code(back_end_problem_info.php)
+        problem.get_coding_type().set_python_code(back_end_problem_info.python)
 
     def __set_description_info(problem, description_info: DescriptionProblemInfo):
         problem.set_model_answer(description_info.model_answer)

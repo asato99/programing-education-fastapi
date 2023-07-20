@@ -1,5 +1,5 @@
 from app.db.tables import LogDto, InputLogDto, OutputLogDto, ErrorLogDto
-from sqlalchemy import and_
+from sqlalchemy import and_, desc
 from sqlalchemy.orm import aliased
 from fastapi.encoders import jsonable_encoder
 
@@ -18,7 +18,7 @@ class LogsQuery():
 			).outerjoin(js_log, and_(LogDto.id==js_log.log_id, js_log.language=='javascript')
 			).outerjoin(css_log, and_(LogDto.id==css_log.log_id, css_log.language=='css')
 			).filter(LogDto.problem_cd==param.problem_cd
-			).filter(LogDto.user_id==param.user_id).all()
+			).filter(LogDto.user_id==param.user_id).order_by(desc(LogDto.id)).all()
 		dict_logs = []
 		for log in logs:
 			dict_log = log._asdict()
@@ -38,7 +38,7 @@ class LogsQuery():
 			).outerjoin(InputLogDto, LogDto.id==InputLogDto.log_id
 			).outerjoin(OutputLogDto, LogDto.id==OutputLogDto.log_id
 			).filter(LogDto.problem_cd==param.problem_cd
-			).filter(LogDto.user_id==param.user_id).all()
+			).filter(LogDto.user_id==param.user_id).order_by(desc(LogDto.id)).all()
 		dict_logs = []
 		for log in logs:
 			dict_log = log._asdict()

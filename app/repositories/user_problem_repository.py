@@ -1,9 +1,10 @@
-from app.db.tables import UserProblemDto, SubmissionDto, CodingSubmissionDto, DescriptionSubmissionDto, SelectSubmissionDto, MessageDto, LogDto, InputLogDto, OutputLogDto
+from app.db.tables import UserProblemDto, SubmissionDto, CodingSubmissionDto, DescriptionSubmissionDto, SelectSubmissionDto, MessageDto, LogDto, InputLogDto, OutputLogDto, ErrorLogDto
 from app.repositories.problem_repository import ProblemRepository
 from app.factories.user_problem_factory import UserProblemFactory
 from app.models.problem import Problem, CodingProblem
 from app.models.user_problem import UserProblem, UserProblems
 from app.models.messages import Messages
+from sqlalchemy import desc
 
 class UserProblemRepository():
 	def __init__(self, session):
@@ -100,12 +101,38 @@ class UserProblemRepository():
 		self.session.query(UserProblemDto
 			).filter(UserProblemDto.user_id==user_problem.get_user_id()
 			).filter(UserProblemDto.problem_cd==user_problem.get_problem_cd()).delete()
+
+		submission_dtos = self.session.query(SubmissionDto
+			).filter(SubmissionDto.user_id==user_problem.get_user_id()
+			).filter(SubmissionDto.problem_cd==user_problem.get_problem_cd()).all()
+		for submission_dto in submission_dtos:
+			self.session.query(CodingSubmissionDto
+			).filter(CodingSubmissionDto.submission_id==submission_dto.id).delete()
+			self.session.query(DescriptionSubmissionDto
+			).filter(DescriptionSubmissionDto.submission_id==submission_dto.id).delete()
+			self.session.query(SelectSubmissionDto
+			).filter(SelectSubmissionDto.submission_id==submission_dto.id).delete()
 		self.session.query(SubmissionDto
 			).filter(SubmissionDto.user_id==user_problem.get_user_id()
 			).filter(SubmissionDto.problem_cd==user_problem.get_problem_cd()).delete()
+
+		log_dtos = self.session.query(LogDto
+			).filter(LogDto.user_id==user_problem.get_user_id()
+			).filter(LogDto.problem_cd==user_problem.get_problem_cd()).all()
+		for log_dto in log_dtos:
+			self.session.query(InputLogDto
+			).filter(InputLogDto.log_id==log_dto.id).delete()
+			self.session.query(OutputLogDto
+			).filter(OutputLogDto.log_id==log_dto.id).delete()
+			self.session.query(ErrorLogDto
+			).filter(ErrorLogDto.log_id==log_dto.id).delete()
 		self.session.query(LogDto
 			).filter(LogDto.user_id==user_problem.get_user_id()
 			).filter(LogDto.problem_cd==user_problem.get_problem_cd()).delete()
+
+		self.session.query(MessageDto
+			).filter(MessageDto.user_id==user_problem.get_user_id()
+			).filter(MessageDto.problem_cd==user_problem.get_problem_cd()).delete()
 
 		self.session.commit()
 
@@ -128,7 +155,7 @@ class UserProblemRepository():
 	def find_all_on_user(self, user_id):
 		user_problems = UserProblems(user_id)
 
-		user_problem_dtos = self.session.query(UserProblemDto).filter(UserProblemDto.user_id==user_id).all()
+		user_problem_dtos = self.session.query(UserProblemDto).filter(UserProblemDto.user_id==user_id).order_by(desc(UserProblemDto.created_at)).all()
 		for user_problem_dto in user_problem_dtos:
 			problem = self.problem_repository.find_by_problem_cd(user_problem_dto.problem_cd)
 			user_problem = UserProblemFactory.create(

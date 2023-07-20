@@ -27,7 +27,6 @@ class AuthService():
 			return {
 				'code': 200,
 				'result': 1,
-				'contents': contents,
 			}
 
 		token = ''.join(random.choices(string.ascii_letters + string.digits, k=30)) 
@@ -56,6 +55,10 @@ class AuthService():
 
 		if row is None:
 			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, headers={"WWW-Authenticate": "Bearer"})
+
+		user = session.query(UserDto).filter(UserDto.user_id==row.auth_id).one()
+		user.accessed_at = datetime.datetime.now()
+		session.commit()
 
 		return row.auth_id
 

@@ -22,8 +22,8 @@ class ProblemData():
         format=1,
         coding_problem=CodingProblemInfo(
             kubun=2, back_end_problem=BackEndProblemInfo(
-                php_code='test php',
-                python_code='test python')))
+                php='test php',
+                python='test python')))
 
     description = ProblemInfo(
         problem_cd='description_problem',
