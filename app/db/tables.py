@@ -66,7 +66,7 @@ class UserDto(Base):
     user_name = Column(String(30))
     password = Column(String(100))
     mail = Column(String(30))
-    accessed_at = Column(DateTime, nullable=True)
+    accessed_at = Column(DateTime, default=datetime.now(), nullable=False)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
