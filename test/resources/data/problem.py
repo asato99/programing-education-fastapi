@@ -59,3 +59,8 @@ class ProblemData():
         language="php",
         code=""
     )
+
+    python_input = CodeInfo(
+        language="python",
+        code="print('test')"
+    )

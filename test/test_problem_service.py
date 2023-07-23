@@ -29,7 +29,7 @@ class TestProblemFactory(unittest.TestCase):
         ProblemService.set_info(problem, problem_info)
 
         # assert
-        expected = problem_info.coding_problem.back_end_problem.python_code
+        expected = problem_info.coding_problem.back_end_problem.python
         actual = problem.get_coding_type().get_python_code()
         self.assertEqual(expected, actual)
 

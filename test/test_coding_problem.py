@@ -49,7 +49,7 @@ class TestProblem(unittest.TestCase):
         # arrange
         problem = CodingProblem(problem_cd='test')
         problem.set_coding_type(BackEndCoding())
-        user_input = ProblemData.php_input
+        user_input = ProblemData.python_input
 
         # action
         expected = 0

@@ -172,3 +172,23 @@ class MessageDto(Base):
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
+
+class StudyDto(Base):
+    __tablename__ = "study"
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    study_cd = Column(String(30))
+    admin_id = Column(Integer)
+    title = Column(Text())
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    updated_at = Column(
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+    )
+
+class StudyContentDto(Base):
+    __tablename__ = "study_content"
+    study_id = Column(Integer, primary_key=True)
+    page = Column(Integer, primary_key=True)
+    content = Column(Text())
+    updated_at = Column(
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+    )
