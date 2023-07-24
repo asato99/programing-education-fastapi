@@ -175,6 +175,13 @@ class TestStudyRepositoryFind(unittest.TestCase):
         actual = study.get_contents()[0]
         self.assertEqual(expected, actual)
 
+    def test_find_by_cd(self):
+        study = self.study_repository.find_by_cd(self.admin_id, self.study_cd)
+
+        expected = self.title
+        actual = study.get_title()
+        self.assertEqual(expected, actual)
+
 class TestStudyRepositoryFindAll(unittest.TestCase):
     def setUp(self):
         # self.skipTest("depends on db")

@@ -2,8 +2,10 @@ from app.db.setting import Base
 from sqlalchemy.schema import Column, Sequence
 from sqlalchemy.types import Integer, String, Text, DateTime
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
+
+current_date = datetime.today() + timedelta(hours=+9)
 
 class AuthTokenDto(Base):
     __tablename__ = "auth_token"
@@ -99,7 +101,7 @@ class LogDto(Base):
     id = Column(Integer, Sequence('log_id_seq'), primary_key=True)
     user_id = Column(Integer)
     problem_cd = Column(String(30))
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_date, nullable=False)
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
@@ -192,3 +194,10 @@ class StudyContentDto(Base):
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
+
+class UserStudyDto(Base):
+    __tablename__ = "user_study"
+    user_id = Column(Integer, primary_key=True)
+    admin_id = Column(Integer, primary_key=True)
+    study_cd = Column(String(30), primary_key=True)
+    created_at = Column(DateTime, default=datetime.now(), nullable=False)

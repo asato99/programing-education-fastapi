@@ -57,6 +57,12 @@ class StudyRepository():
 			).filter(StudyDto.id==study_id).one()
 		return self.__generate_study(study_dto)
 
+	def find_by_cd(self, admin_id, study_cd):
+		study_dto = self.session.query(StudyDto
+			).filter(StudyDto.admin_id==admin_id
+			).filter(StudyDto.study_cd==study_cd).one()
+		return self.__generate_study(study_dto)
+
 	def find_all_on_admin(self, admin_id):
 		study_dtos = self.session.query(StudyDto
 			).filter(StudyDto.admin_id==admin_id).all()
@@ -75,6 +81,8 @@ class StudyRepository():
 			admin_id=dto.admin_id,
 			study_cd=dto.study_cd)
 		study.set_title(dto.title)
+		study.set_created_at(format(dto.created_at, "%Y年%m月%d日"))
+		study.set_updated_at(format(dto.updated_at, "%Y年%m月%d日"))
 		
 		for content_dto in study_content_dtos:
 			study.add_content(content_dto.content)

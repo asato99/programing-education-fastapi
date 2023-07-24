@@ -1,0 +1,5 @@
+DB_HOST = "localhost"
+DB_PORT = "5432"
+DB_USER = "sabira"
+DB_PASSWORD = "okioki"
+DB_NAME = "tetdb"
