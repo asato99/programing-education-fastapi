@@ -2,10 +2,14 @@ from app.db.setting import Base
 from sqlalchemy.schema import Column, Sequence
 from sqlalchemy.types import Integer, String, Text, DateTime
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+# from zoneinfo import ZoneInfo
+# from dateutil import tz
 from typing import Optional
 
-current_date = datetime.today() + timedelta(hours=+9)
+def current_time():
+    JST = timezone(timedelta(hours=+9), 'JST')
+    return datetime.now(JST)
 
 class AuthTokenDto(Base):
     __tablename__ = "auth_token"
@@ -101,7 +105,7 @@ class LogDto(Base):
     id = Column(Integer, Sequence('log_id_seq'), primary_key=True)
     user_id = Column(Integer)
     problem_cd = Column(String(30))
-    created_at = Column(DateTime, default=current_date, nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
