@@ -19,15 +19,11 @@ class UserStudyRepository():
 		self.session.add(user_study_dto)
 		self.session.commit()
 
-	def delete(self, study):
-		study_dto = self.session.query(StudyDto
-			).filter(StudyDto.admin_id==study.get_admin_id()
-			).filter(StudyDto.study_cd==study.get_study_cd()).one()
-		self.session.query(StudyContentDto
-			).filter(StudyContentDto.study_id==study_dto.id).delete()
-		self.session.query(StudyDto
-			).filter(StudyDto.admin_id==study.get_admin_id()
-			).filter(StudyDto.study_cd==study.get_study_cd()).delete()
+	def delete(self, user_study):
+		self.session.query(UserStudyDto
+			).filter(UserStudyDto.user_id==user_study.get_user_id()
+			).filter(UserStudyDto.admin_id==user_study.get_admin_id()
+			).filter(UserStudyDto.study_cd==user_study.get_study_cd()).delete()
 
 	def find_all_on_user(self, user_id):
 		user_study_dtos = self.session.query(UserStudyDto
@@ -45,4 +41,6 @@ class UserStudyRepository():
 			user_studies.add_user_study(user_study)
 
 		return user_studies
+
+
 		

@@ -32,3 +32,8 @@ def regist(param: UserStudyInfo):
 def get_user_study_list(user_id:int):
     user_studies = user_study_repository.find_all_on_user(user_id)
     return user_studies.export()
+
+@router.get('/unregisted/{user_id}')
+def get_unregisted_study_list(user_id:int):
+    studies = study_repository.find_unregisted_studies_on_user(admin_id=1, user_id=user_id)
+    return studies.export()

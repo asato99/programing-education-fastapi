@@ -3,19 +3,16 @@ from sqlalchemy.schema import Column, Sequence
 from sqlalchemy.types import Integer, String, Text, DateTime
 
 from datetime import datetime, timedelta, timezone
-# from zoneinfo import ZoneInfo
-# from dateutil import tz
 from typing import Optional
 
 def current_time():
-    JST = timezone(timedelta(hours=+9), 'JST')
-    return datetime.now(JST)
+    return datetime.now() + timedelta(hours=+9)
 
 class AuthTokenDto(Base):
     __tablename__ = "auth_token"
     token = Column(String(30), primary_key=True)
     auth_id = Column(Integer)
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
 
 class ProblemDto(Base):
     __tablename__ = "problem"
@@ -24,9 +21,9 @@ class ProblemDto(Base):
     format = Column(Integer)
     title = Column(String(50))
     question = Column(Text())
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class CodingProblemDto(Base):
@@ -34,18 +31,18 @@ class CodingProblemDto(Base):
     problem_cd = Column(String(30), primary_key=True)
     language = Column(String(15), primary_key=True)
     code = Column(Text())
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class CodingKubunDto(Base):
     __tablename__ = "coding_kubun"
     problem_cd = Column(String(30), primary_key=True)
     kubun = Column(Integer)
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class DescriptionProblemDto(Base):
@@ -72,10 +69,10 @@ class UserDto(Base):
     user_name = Column(String(30))
     password = Column(String(100))
     mail = Column(String(30))
-    accessed_at = Column(DateTime, default=datetime.now(), nullable=False)
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    accessed_at = Column(DateTime, default=current_time, nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class TantoDto(Base):
@@ -84,9 +81,9 @@ class TantoDto(Base):
     user_id = Column(Integer)
     name = Column(String(30))
     mail = Column(String(30))
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class UserProblemDto(Base):
@@ -95,9 +92,9 @@ class UserProblemDto(Base):
     problem_cd = Column(String(30), primary_key=True)
     status = Column(Integer)
     memo = Column(Text)
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class LogDto(Base):
@@ -107,7 +104,7 @@ class LogDto(Base):
     problem_cd = Column(String(30))
     created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class InputLogDto(Base):
@@ -133,9 +130,9 @@ class SubmissionDto(Base):
     user_id = Column(Integer)
     problem_cd = Column(String(30))
     comment = Column(Text())
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class CodingSubmissionDto(Base):
@@ -143,27 +140,27 @@ class CodingSubmissionDto(Base):
     submission_id = Column(Integer, primary_key=True)
     language = Column(String(15), primary_key=True)
     code = Column(Text())
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class DescriptionSubmissionDto(Base):
     __tablename__ = "description_submission"
     submission_id = Column(Integer, primary_key=True)
     answer = Column(Text())
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class SelectSubmissionDto(Base):
     __tablename__ = "select_submission"
     submission_id = Column(Integer, primary_key=True)
     answer = Column(Integer)
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class MessageDto(Base):
@@ -174,9 +171,9 @@ class MessageDto(Base):
     title = Column(Text())
     message = Column(Text())
     read = Integer
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class StudyDto(Base):
@@ -185,9 +182,9 @@ class StudyDto(Base):
     study_cd = Column(String(30))
     admin_id = Column(Integer)
     title = Column(Text())
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class StudyContentDto(Base):
@@ -196,7 +193,7 @@ class StudyContentDto(Base):
     page = Column(Integer, primary_key=True)
     content = Column(Text())
     updated_at = Column(
-        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
+        DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
 class UserStudyDto(Base):
@@ -204,4 +201,4 @@ class UserStudyDto(Base):
     user_id = Column(Integer, primary_key=True)
     admin_id = Column(Integer, primary_key=True)
     study_cd = Column(String(30), primary_key=True)
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)

@@ -3,6 +3,7 @@ from app.db.tables import ProblemDto, CodingProblemDto, CodingKubunDto, Descript
 from app.types.problem import ProblemInfo, CodingProblemInfo, SelectProblemOption
 from app.models.problem import Problem, CodingProblem, FrontEndCoding, BackEndCoding, Problems
 from app.factories.problem_factory import ProblemFactory
+from sqlalchemy import desc
 
 class ProblemRepository():
     def __init__(self, session):
@@ -237,7 +238,8 @@ class ProblemRepository():
             ProblemDto.question,
             ProblemDto.created_at,
             CodingKubunDto.kubun).outerjoin(
-                CodingKubunDto, ProblemDto.problem_cd == CodingKubunDto.problem_cd).all()
+                CodingKubunDto, ProblemDto.problem_cd == CodingKubunDto.problem_cd
+                ).order_by(ProblemDto.created_at).all()
 
         problem_list = []
         for dto in problem_dtos:

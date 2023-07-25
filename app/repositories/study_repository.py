@@ -1,5 +1,6 @@
 from app.models.study import Study, Studies
 from app.db.tables import StudyDto, StudyContentDto
+from sqlalchemy import text
 
 class StudyRepository():
 	def __init__(self, session):
@@ -71,6 +72,29 @@ class StudyRepository():
 		for dto in study_dtos:
 			studies.add_study(self.__generate_study(dto))
 
+		return studies
+
+	def find_unregisted_studies_on_user(self, admin_id, user_id):
+		sql = text('''
+			select
+				study_cd,
+				title
+			from study
+			where admin_id = {0}
+			and study_cd not in (
+				select study_cd from user_study
+				where user_id = {1}
+			)	
+		'''.format(admin_id, user_id))
+
+		studies = Studies()
+		rows = self.session.execute(sql)
+		for row in rows:
+			study = Study(
+				admin_id=admin_id,
+				study_cd=row.study_cd)
+			study.set_title(row.title)
+			studies.add_study(study)
 		return studies
 		
 	def __generate_study(self, dto):
