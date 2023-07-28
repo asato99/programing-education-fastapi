@@ -1,5 +1,5 @@
 from app.models.study import Study, Studies
-from app.db.tables import StudyDto, StudyContentDto
+from app.db.tables import StudyDto, StudyContentDto, UserStudyDto
 from sqlalchemy import text
 
 class StudyRepository():
@@ -44,6 +44,17 @@ class StudyRepository():
 		self.session.commit()
 
 	def delete(self, study):
+		# delete user_study
+		user_study_dtos = self.session.query(UserStudyDto
+			).filter(UserStudyDto.admin_id==study.get_admin_id()
+			).filter(UserStudyDto.study_cd==study.get_study_cd()).all()
+		for dto in user_study_dtos:
+			self.session.query(UserStudyDto
+				).filter(UserStudyDto.user_id==dto.user_id
+				).filter(UserStudyDto.admin_id==study.get_admin_id()
+				).filter(UserStudyDto.study_cd==study.get_study_cd()).delete()
+
+		# delete study
 		study_dto = self.session.query(StudyDto
 			).filter(StudyDto.admin_id==study.get_admin_id()
 			).filter(StudyDto.study_cd==study.get_study_cd()).one()
@@ -52,6 +63,8 @@ class StudyRepository():
 		self.session.query(StudyDto
 			).filter(StudyDto.admin_id==study.get_admin_id()
 			).filter(StudyDto.study_cd==study.get_study_cd()).delete()
+
+		self.session.commit()
 		
 	def find_by_id(self, study_id):
 		study_dto = self.session.query(StudyDto

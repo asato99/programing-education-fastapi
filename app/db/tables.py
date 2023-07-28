@@ -14,6 +14,52 @@ class AuthTokenDto(Base):
     auth_id = Column(Integer)
     created_at = Column(DateTime, default=current_time, nullable=False)
 
+class Admin(Base):
+    __tablename__ = "admin_tbl"
+    admin_id = Column(Integer, primary_key=True)
+    admin_cd = Column(String(30), primary_key=True)
+    admin_name = Column(String(30))
+    password = Column(String(100))
+    mail = Column(String(30))
+    created_at = Column(DateTime, default=current_time, nullable=False)
+    updated_at = Column(
+        DateTime, default=current_time, onupdate=current_time, nullable=False
+    )
+
+class AdminManager(Base):
+    __tablename__ = "admin_manager"
+    admin_id = Column(Integer, primary_key=True, autoincrement=True)
+    unique_cd = Column(String(30))
+    created_at = Column(DateTime, default=current_time, nullable=False)
+    updated_at = Column(
+        DateTime, default=current_time, onupdate=current_time, nullable=False
+    )
+
+class UserDto(Base):
+    __tablename__ = "user_tbl"
+    user_id = Column(Integer, primary_key=True, autoincrement=True)
+    admin_id = Column(Integer)
+    user_cd = Column(String(30))
+    user_name = Column(String(30))
+    password = Column(String(100))
+    mail = Column(String(30))
+    accessed_at = Column(DateTime, default=current_time, nullable=False)
+    created_at = Column(DateTime, default=current_time, nullable=False)
+    updated_at = Column(
+        DateTime, default=current_time, onupdate=current_time, nullable=False
+    )
+
+class TantoDto(Base):
+    __tablename__ = "tanto"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer)
+    name = Column(String(30))
+    mail = Column(String(30))
+    created_at = Column(DateTime, default=current_time, nullable=False)
+    updated_at = Column(
+        DateTime, default=current_time, onupdate=current_time, nullable=False
+    )
+
 class ProblemDto(Base):
     __tablename__ = "problem"
     problem_cd = Column(String(30), primary_key=True)
@@ -60,31 +106,6 @@ class SelectProblemAnswerDto(Base):
     __tablename__ = "select_problem_answer"
     problem_cd = Column(String(30), primary_key=True)
     answer = Column(Integer)
-
-class UserDto(Base):
-    __tablename__ = "user_tbl"
-    user_id = Column(Integer, primary_key=True, autoincrement=True)
-    admin_id = Column(Integer)
-    user_cd = Column(String(30))
-    user_name = Column(String(30))
-    password = Column(String(100))
-    mail = Column(String(30))
-    accessed_at = Column(DateTime, default=current_time, nullable=False)
-    created_at = Column(DateTime, default=current_time, nullable=False)
-    updated_at = Column(
-        DateTime, default=current_time, onupdate=current_time, nullable=False
-    )
-
-class TantoDto(Base):
-    __tablename__ = "tanto"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer)
-    name = Column(String(30))
-    mail = Column(String(30))
-    created_at = Column(DateTime, default=current_time, nullable=False)
-    updated_at = Column(
-        DateTime, default=current_time, onupdate=current_time, nullable=False
-    )
 
 class UserProblemDto(Base):
     __tablename__ = "user_problem"

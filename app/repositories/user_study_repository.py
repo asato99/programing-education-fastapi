@@ -24,6 +24,7 @@ class UserStudyRepository():
 			).filter(UserStudyDto.user_id==user_study.get_user_id()
 			).filter(UserStudyDto.admin_id==user_study.get_admin_id()
 			).filter(UserStudyDto.study_cd==user_study.get_study_cd()).delete()
+		self.session.commit()
 
 	def find_all_on_user(self, user_id):
 		user_study_dtos = self.session.query(UserStudyDto

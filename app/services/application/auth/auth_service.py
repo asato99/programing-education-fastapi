@@ -7,7 +7,7 @@ import hashlib
 import random
 import string
 import textwrap
-import datetime
+from datetime import datetime, timedelta
 
 class AuthService():
 
@@ -57,7 +57,7 @@ class AuthService():
 			raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, headers={"WWW-Authenticate": "Bearer"})
 
 		user = session.query(UserDto).filter(UserDto.user_id==row.auth_id).one()
-		user.accessed_at = datetime.datetime.now()
+		user.accessed_at = datetime.now() + timedelta(hours=+9)
 		session.commit()
 
 		return row.auth_id

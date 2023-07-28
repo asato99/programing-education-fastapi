@@ -14,6 +14,8 @@ origins = [
     "http://127.0.0.1:8080",
     "http://user.educational-tree.net",
     "http://admin.educational-tree.net",
+    "https://user.educational-tree.net",
+    "https://admin.educational-tree.net",
 ]
 
 app.add_middleware(

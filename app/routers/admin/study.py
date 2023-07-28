@@ -31,6 +31,14 @@ def save(param: StudyInfo):
     study_repository.save(study)
     return
 
+@router.post('/delete')
+def delete(param: StudyInfo):
+    study = study_repository.find_by_cd(
+        admin_id=1,
+        study_cd=param.study_cd)
+    study_repository.delete(study)
+    return
+
 @router.get('/find/{study_cd}')
 def get_study(study_cd:str):
     study = study_repository.find_by_cd(
