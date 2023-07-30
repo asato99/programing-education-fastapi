@@ -7,7 +7,7 @@ class UserRepository():
 		self.session = session
 
 	def __del__(self):
-		self.session.close
+		self.session.close()
 
 	def regist(self, user):
 		user_dto = UserDto(

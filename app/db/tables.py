@@ -14,22 +14,22 @@ class AuthTokenDto(Base):
     auth_id = Column(Integer)
     created_at = Column(DateTime, default=current_time, nullable=False)
 
-class Admin(Base):
-    __tablename__ = "admin_tbl"
-    admin_id = Column(Integer, primary_key=True)
-    admin_cd = Column(String(30), primary_key=True)
-    admin_name = Column(String(30))
-    password = Column(String(100))
-    mail = Column(String(30))
+class AdminManagerDto(Base):
+    __tablename__ = "admin_manager"
+    admin_id = Column(Integer, primary_key=True, autoincrement=True)
+    unique_cd = Column(String(30))
     created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
         DateTime, default=current_time, onupdate=current_time, nullable=False
     )
 
-class AdminManager(Base):
-    __tablename__ = "admin_manager"
-    admin_id = Column(Integer, primary_key=True, autoincrement=True)
-    unique_cd = Column(String(30))
+class MentorDto(Base):
+    __tablename__ = "mentor_tbl"
+    admin_id = Column(Integer, primary_key=True)
+    mentor_cd = Column(String(30), primary_key=True)
+    mentor_name = Column(String(30))
+    password = Column(String(100))
+    mail = Column(String(30))
     created_at = Column(DateTime, default=current_time, nullable=False)
     updated_at = Column(
         DateTime, default=current_time, onupdate=current_time, nullable=False

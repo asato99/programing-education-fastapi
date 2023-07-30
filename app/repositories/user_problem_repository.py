@@ -12,7 +12,7 @@ class UserProblemRepository():
 		self.problem_repository = ProblemRepository(session)
 
 	def __del__(self):
-		self.session.close
+		self.session.close()
 
 	def regist(self, user_problem):
 		user_problem_dto = UserProblemDto(
