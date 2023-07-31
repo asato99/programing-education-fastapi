@@ -26,6 +26,7 @@ class AdminManagerDto(Base):
 class MentorDto(Base):
     __tablename__ = "mentor_tbl"
     admin_id = Column(Integer, primary_key=True)
+    role = Column(Integer)
     mentor_cd = Column(String(30), primary_key=True)
     mentor_name = Column(String(30))
     password = Column(String(100))

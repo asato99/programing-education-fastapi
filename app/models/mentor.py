@@ -1,8 +1,9 @@
 import hashlib
 
 class Mentor():
-	def __init__(self, admin_id, mentor_cd):
+	def __init__(self, admin_id, role, mentor_cd):
 		self.admin_id = admin_id
+		self.role = role
 		self.mentor_cd = mentor_cd
 		self.name = ''
 		self.mail = ''
@@ -25,6 +26,9 @@ class Mentor():
 	def get_admin_id(self):
 		return self.admin_id
 
+	def get_role(self):
+		return self.role
+
 	def get_mentor_cd(self):
 		return self.mentor_cd
 
@@ -44,6 +48,7 @@ class Mentor():
 		return {
 			'mentor_cd': self.get_mentor_cd(),
 			'mentor_name': self.get_name(),
+			'role': self.get_role(),
 			'created_at': self.get_created_at(),
 		}
 
