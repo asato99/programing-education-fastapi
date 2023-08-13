@@ -17,6 +17,7 @@ mentor_repository = MentorRepository(setting.get_session())
 def regist(param: MentorInfo, admin_id: int = Depends(AuthService.get_admin_id_from_header)):
     mentor = Mentor(
         admin_id=admin_id,
+        role=2,
         mentor_cd=param.mentor_cd)
     mentor.set_name(param.mentor_name)
     mentor.regist_password(param.password)

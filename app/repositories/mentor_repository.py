@@ -11,6 +11,7 @@ class MentorRepository():
 	def regist(self, mentor):
 		mentor_dto = MentorDto(
 			admin_id=mentor.get_admin_id(),
+			role=mentor.get_role(),
 			mentor_cd=mentor.get_mentor_cd(),
 			mentor_name=mentor.get_name(),
 			password=mentor.get_password())
@@ -29,6 +30,7 @@ class MentorRepository():
 	def __generate_mentor(self, dto):
 		mentor = Mentor(
 			admin_id=dto.admin_id,
+			role=dto.role,
 			mentor_cd=dto.mentor_cd)
 		mentor.set_name(dto.mentor_name)
 		mentor.set_mail(dto.mail)

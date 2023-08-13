@@ -49,7 +49,7 @@ class Mentor():
 			'mentor_cd': self.get_mentor_cd(),
 			'mentor_name': self.get_name(),
 			'role': self.get_role(),
-			'created_at': self.get_created_at(),
+			'created_at': format(self.get_created_at(), '%Y年%m月%d日')
 		}
 
 class Mentors():
