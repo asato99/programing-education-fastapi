@@ -25,6 +25,11 @@ def regist(param: MentorInfo, admin_id: int = Depends(AuthService.get_admin_id_f
     mentor_repository.regist(mentor)    
     return
 
+@router.get('/find')
+def get_mentor(mentor_cd:str, admin_id: int = Depends(AuthService.get_admin_id_from_header)):
+    mentor = mentor_repository.find_by_cd(admin_id, mentor_cd)
+    return mentor
+
 @router.get('/list')
 def get_mentor_list(admin_id: int = Depends(AuthService.get_admin_id_from_header)):
     mentors = mentor_repository.find_all(admin_id)
