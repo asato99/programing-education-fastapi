@@ -18,6 +18,15 @@ class MentorRepository():
 		self.session.add(mentor_dto)
 		self.session.commit()
 
+	def save(self, mentor):
+		mentor_dto = self.session.query(MentorDto
+			).filter(MentorDto.admin_id==mentor.get_admin_id()
+			).filter(MentorDto.mentor_cd==mentor.get_mentor_cd()).one()
+		mentor_dto.name = mentor.get_name()
+		mentor_dto.mail = mentor.get_mail()
+
+		self.session.commit()
+
 	def find_by_cd(self, admin_id, mentor_cd):
 		mentor_dto = self.session.query(MentorDto
 			).filter(MentorDto.admin_id==admin_id

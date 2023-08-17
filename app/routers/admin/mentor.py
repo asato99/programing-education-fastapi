@@ -25,6 +25,18 @@ def regist(param: MentorInfo, admin_id: int = Depends(AuthService.get_admin_id_f
     mentor_repository.regist(mentor)    
     return
 
+@router.post('/save')
+def regist(param: MentorInfo, admin_id: int = Depends(AuthService.get_admin_id_from_header)):
+    mentor = Mentor(
+        admin_id=admin_id,
+        role=param.role,
+        mentor_cd=param.mentor_cd)
+    mentor.set_name(param.mentor_name)
+    mentor.set_mail(param.mail)
+
+    mentor_repository.save(mentor)    
+    return
+
 @router.get('/find')
 def get_mentor(mentor_cd:str, admin_id: int = Depends(AuthService.get_admin_id_from_header)):
     mentor = mentor_repository.find_by_cd(admin_id, mentor_cd)
